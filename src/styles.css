@@ -1,0 +1,16 @@
+/* Components */
+@import "./components/hello-world/styles.css";
+
+/* Pages */
+@import "./pages/home/styles.css";
+
+/* Application */
+.main {
+    display: block;
+    position: relative;
+    min-width: 500px;
+    max-width: 1024px;
+    padding: 15px;
+    margin: 0px 50%;
+    border: 1px;
+}

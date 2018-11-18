@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Wanton Template</title>
+    <link rel="stylesheet" href="src/styles.css" />
+
+    <!-- load webcomponents bundle, which includes all the necessary polyfills -->
+    <script src="node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js" defer></script>
+    <!-- Load a custom element definitions in `waitFor` and return a promise -->
+    <script type="module">
+      WebComponents.waitFor(() => {
+        return import('./src/index.js');
+      });
+    </script>
+</head>
+
+<body>
+    <!-- page content -->
+    <div class="main">
+    </div>
+</body>
+
+</html>

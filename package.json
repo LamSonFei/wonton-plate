@@ -1,0 +1,22 @@
+{
+  "name": "wanton",
+  "version": "0.1.0",
+  "description": "Template for web applications using web components",
+  "main": "src/index.js",
+  "author": "Adrien Nortain",
+  "license": "ISC",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Zenika/wanton-template.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Zenika/wanton-template/issues"
+  },
+  "homepage": "https://github.com/Zenika/wanton-template#readme",
+  "dependencies": {
+    "@webcomponents/webcomponentsjs": "^2.1.3"
+  }
+}
