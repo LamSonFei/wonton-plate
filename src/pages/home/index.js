@@ -7,13 +7,15 @@ export class HomePage extends BasePage {
     constructor(props) {
         super(props);
     }
-    initData() {
+    componentName() {
+        return 'page-hello-world';
+    }
+    template(props) {
+        return `<hello-world class="my-hello-world-component" name="${props.userName}"></hello-world>`;
+    }
+    references() {
         return {
-            componentName: 'page-hello-world',
-            template: () => `<hello-world class="my-hello-world-component" name="${this.props.userName}"></hello-world>`,
-            references: {
-                'helloWorldComponent': '.my-hello-world-component'
-            }
+            'helloWorldComponent': '.my-hello-world-component'
         }
     }
     connectedCallback() {

@@ -14,21 +14,25 @@ export class BaseComponent extends HTMLElement {
         super();
         this._props = props || {};
         const _this = this;
-        const initData = typeof _this.initData === 'function' ? _this.initData() : null;
-        if (!initData) {
-            console.error('Missing initData function on component.');
-            return;
-        }
         _this.classList.add('cmp-base');
-        if (initData.componentName) _this.classList.add(initData.componentName);
-        _this._componentName = initData.componentName || 'some-cmp';
+        _this._componentName = 'some-cmp';
+        if (typeof _this.componentName === 'function') {
+            _this.classList.add(_this.componentName());
+            _this._componentName = _this.componentName() || 'some-cmp';
+        }
         // View template init
-        _this.innerHTML = typeof initData.template === 'function' ? initData.template() : '';
+        _this.innerHTML = typeof _this.template === 'function' ? _this.template(props) : '';
         // References init
         _this._refs = {};
-        (Object.getOwnPropertyNames(initData.references) || []).map(refName => _this._refs[refName] = _this.querySelector(initData.references[refName]));
+        if (typeof _this.references === 'function') {
+            const references = _this.references();
+            (Object.getOwnPropertyNames(references) || []).map(refName => _this._refs[refName] = _this.querySelector(references[refName]));
+        }
         // Listeners registration
-        _this._listeners = initData.listeners || {};
+        _this._listeners = {};
+        if (typeof _this.listeners === 'function') {
+            _this._listeners = _this.listeners() || {};
+        }
         // Methods bindings
         Object.getOwnPropertyNames(_this)
             .filter(p => typeof _this[p] === 'function')

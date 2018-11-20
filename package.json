@@ -16,7 +16,5 @@
     "url": "https://github.com/Zenika/wanton-template/issues"
   },
   "homepage": "https://github.com/Zenika/wanton-template#readme",
-  "dependencies": {
-    "@webcomponents/webcomponentsjs": "^2.1.3"
-  }
+  "dependencies": {}
 }

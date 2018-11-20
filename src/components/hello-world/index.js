@@ -9,28 +9,27 @@ export class HelloWorld extends BaseComponent {
     // Init
     constructor() {
         super();
-    };
-    // Initialization data
-    initData() {
+    }
+    componentName() {
+        return 'cmp-hello-world';
+    }
+    template() {
+        return `<button type="button" class="cmp-hello-world_button">Hello World!</button>`;
+    }
+    references() {
         return {
-            componentName: 'cmp-hello-world',
-            template: () =>  `<button type="button" class="cmp-hello-world_button">Hello ${this.name || 'World'}!</button>`,
-            references: {
-                'helloWorldButton': '.cmp-hello-world_button'
-            },
-            listeners: {
-                'this': {
-                    'click': () => console.log('HelloWorld got clicked as a component!')
-                },
-                'helloWorldButton': {
-                    'click': () => this.sayHello()
-                }
-            }
+            'helloWorldButton': '.cmp-hello-world_button'
         }
     }
-    // Observed attributes
-    static get observedAttributes() {
-        return ['name'];
+    listeners() {
+        return {
+            'this': {
+                'click': () => console.log('HelloWorld got clicked as a component!')
+            },
+            'helloWorldButton': {
+                'click': () => this.sayHello()
+            }
+        }
     }
     // Properties
     get name() {
@@ -38,11 +37,23 @@ export class HelloWorld extends BaseComponent {
     }
     set name(name) {
         this.setAttribute('name', name);
-        this.fromRef('helloWorldButton').innerText = `Hello ${this.name || 'World'}!`;
     }
     // Methods
     sayHello() {
-        alert(`Hello ${this.name}!`);
+        alert(`Hello ${this.name || 'World'}!`);
+    }
+    // Observed attributes
+    static get observedAttributes() {
+        return ['name'];
+    }
+    attributeChangedCallback(name, oldValue, newValue) {
+        super.attributeChangedCallback(name, oldValue, newValue);
+        switch (name) {
+            case 'name':
+                this.getRef('helloWorldButton').innerText = `Hello ${this.name || 'World'}!`;
+                break;
+            default:
+        }
     }
 }
 
