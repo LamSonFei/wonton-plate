@@ -1,6 +1,9 @@
 'use strict';
 
-import { BaseComponent } from "../base/index.js";
+import template from './template.html';
+
+import log from 'services/log';
+import { BaseComponent } from "components/base";
 
 /**
  * Hello World demo component.
@@ -14,7 +17,7 @@ export class HelloWorld extends BaseComponent {
         return 'cmp-hello-world';
     }
     template() {
-        return `<button type="button" class="cmp-hello-world_button">Hello World!</button>`;
+        return template;
     }
     references() {
         return {
@@ -24,7 +27,7 @@ export class HelloWorld extends BaseComponent {
     listeners() {
         return {
             'this': {
-                'click': () => console.log('HelloWorld got clicked as a component!')
+                'click': () => log.info('HelloWorld got clicked as a component!')
             },
             'helloWorldButton': {
                 'click': () => this.sayHello()
@@ -46,8 +49,13 @@ export class HelloWorld extends BaseComponent {
     static get observedAttributes() {
         return ['name'];
     }
+    connectedCallback() {
+        super.connectedCallback();
+        this.getRef('helloWorldButton').innerText = `Hello ${this.name || 'World'}!`;
+    }
     attributeChangedCallback(name, oldValue, newValue) {
         super.attributeChangedCallback(name, oldValue, newValue);
+        if (!this.isRendered) return;
         switch (name) {
             case 'name':
                 this.getRef('helloWorldButton').innerText = `Hello ${this.name || 'World'}!`;
