@@ -1,10 +1,14 @@
-.page-hello-world {
-    border: 1px;
+.page-home {
+    display: flex;
+    margin: auto;
+    align-items: center;
+    min-height:  150px;
 }
-.page-hello-world:after {
+.page-home:after {
     content: "";
     background: #fff url(./../../assets/images/codingtheworld.jpg) 0px 0px no-repeat;
     background-size: contain;
+    background-position-x: center;
     opacity: 0.5;
     top: 0;
     left: 0;

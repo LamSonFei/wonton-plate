@@ -12,7 +12,7 @@ export class BaseComponent extends HTMLElement {
      * 
      * @param {object} props the initial properties of the component
      */
-    constructor(props) {
+    constructor(props = {}) {
         super();
         this.classList.add('cmp-base');
         // Properties init

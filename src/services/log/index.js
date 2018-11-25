@@ -35,10 +35,10 @@ class ConsoleLogger extends Logger {
         super();
     }
     static get instance() {
-        if (!this._instance) {
-            this._instance = new ConsoleLogger();
+        if (!ConsoleLogger._instance) {
+            ConsoleLogger._instance = new ConsoleLogger();
         }
-        return this._instance;
+        return ConsoleLogger._instance;
     }
     debug() {
         if (this.debugEnabled) {

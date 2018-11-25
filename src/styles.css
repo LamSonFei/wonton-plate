@@ -5,12 +5,36 @@
 @import "./pages/home/styles.css";
 
 /* Application */
-.main {
+.app {
     display: block;
     position: relative;
-    min-width: 500px;
+    padding: 15px 0px;
+    width: 100%;
+    top: 0px;
+    bottom: 0px;
+}
+.main {
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+    box-shadow: 0px 0px 5px 5px #d8d8d8;
+    min-width: 300px;
     max-width: 1024px;
+}
+.header,
+.page,
+.footer {
+    display: flex;
     padding: 15px;
-    margin: 0px 50%;
-    border: 1px;
+    position: relative;
+}
+.header,
+.footer {
+    max-height: 30px;
+}
+.header {
+    align-items: flex-start;
+}
+.footer {
+    align-items: flex-end;
 }

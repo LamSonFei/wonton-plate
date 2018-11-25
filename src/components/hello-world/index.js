@@ -4,6 +4,7 @@ import template from './template.html';
 
 import log from 'services/log';
 import { BaseComponent } from "components/base";
+import i18n from 'services/i18n';
 
 /**
  * Hello World demo component.
@@ -41,27 +42,41 @@ export class HelloWorld extends BaseComponent {
     set name(name) {
         this.setAttribute('name', name);
     }
+    get helloWorldMessage() {
+        return i18n.t('cmp.hello-world.hello', {name: this.name || i18n.t('cmp.hello-world.world')});
+    }
     // Methods
     sayHello() {
-        alert(`Hello ${this.name || 'World'}!`);
+        alert(this.helloWorldMessage);
+    }
+    refreshInnerTexts() {
+        this.getRef('helloWorldButton').innerText = this.helloWorldMessage;
     }
     // Observed attributes
     static get observedAttributes() {
         return ['name'];
     }
+    localeChangedCallback() {
+        this.refreshInnerTexts();
+    }
     connectedCallback() {
         super.connectedCallback();
-        this.getRef('helloWorldButton').innerText = `Hello ${this.name || 'World'}!`;
+        this._i18nSubscription = i18n.subscribe(this);
+        this.refreshInnerTexts();
     }
     attributeChangedCallback(name, oldValue, newValue) {
         super.attributeChangedCallback(name, oldValue, newValue);
-        if (!this.isRendered) return;
+        if (!this.isRendered || oldValue === newValue) return;
         switch (name) {
             case 'name':
-                this.getRef('helloWorldButton').innerText = `Hello ${this.name || 'World'}!`;
+                this.refreshInnerTexts();
                 break;
             default:
         }
+    }
+    disconnectedCallback() {
+        super.disconnectedCallback();
+        this._i18nSubscription.unsubscribe();
     }
 }
 
