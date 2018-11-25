@@ -11,7 +11,7 @@ export class HomePage extends BasePage {
         super(props);
     }
     componentName() {
-        return 'page-hello-world';
+        return 'page-home';
     }
     template(props) {
         return template.replace(/\[props\.userName\]/g, props.userName);

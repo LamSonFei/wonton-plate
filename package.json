@@ -19,7 +19,10 @@
     "url": "https://github.com/Zenika/wanton-template/issues"
   },
   "homepage": "https://github.com/Zenika/wanton-template#readme",
-  "dependencies": {},
+  "dependencies": {
+    "lodash": "^4.17.11",
+    "rxjs": "^6.3.3"
+  },
   "devDependencies": {
     "clean-webpack-plugin": "^1.0.0",
     "css-loader": "^1.0.1",

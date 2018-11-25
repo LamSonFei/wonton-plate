@@ -1,0 +1,9 @@
+{
+    "cmp": {
+        "locale-chooser": {
+            "choose-one": "Sélectionnez une langue",
+            "en": "Anglais",
+            "fr": "Français"
+        }
+    }
+}

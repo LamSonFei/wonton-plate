@@ -1,0 +1,8 @@
+{
+    "cmp": {
+        "hello-world": {
+            "hello": "Bonjour ${name} !",
+            "world": "tout le monde"
+        }
+    }
+}
