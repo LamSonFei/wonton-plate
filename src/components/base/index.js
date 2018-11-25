@@ -1,5 +1,7 @@
 'use strict';
 
+import log from 'services/log';
+
 /**
  * Base component for the application.
  * Provides support for adding/removing events on connection/disconnection.
@@ -12,31 +14,21 @@ export class BaseComponent extends HTMLElement {
      */
     constructor(props) {
         super();
+        this.classList.add('cmp-base');
+        // Properties init
         this._props = props || {};
-        const _this = this;
-        _this.classList.add('cmp-base');
-        _this._componentName = 'some-cmp';
-        if (typeof _this.componentName === 'function') {
-            _this.classList.add(_this.componentName());
-            _this._componentName = _this.componentName() || 'some-cmp';
+        // Component name is used for logging and styling
+        this._componentName = 'some-cmp';
+        if (typeof this.componentName === 'function') {
+            this.classList.add(this.componentName());
+            this._componentName = this.componentName() || 'some-cmp';
         }
-        // View template init
-        _this.innerHTML = typeof _this.template === 'function' ? _this.template(props) : '';
-        // References init
-        _this._refs = {};
-        if (typeof _this.references === 'function') {
-            const references = _this.references();
-            (Object.getOwnPropertyNames(references) || []).map(refName => _this._refs[refName] = _this.querySelector(references[refName]));
-        }
-        // Listeners registration
-        _this._listeners = {};
-        if (typeof _this.listeners === 'function') {
-            _this._listeners = _this.listeners() || {};
-        }
+        // Tracker to know when to use listeners, getRef...
+        this._rendered = false;
         // Methods bindings
-        Object.getOwnPropertyNames(_this)
-            .filter(p => typeof _this[p] === 'function')
-            .map(fn => _this[fn].bind(_this));
+        Object.getOwnPropertyNames(this)
+            .filter(p => typeof this[p] === 'function')
+            .map(fn => this[fn].bind(this));
     }
     // Utilities
     /**
@@ -54,26 +46,47 @@ export class BaseComponent extends HTMLElement {
     get props() {
         return this._props;
     }
+    /**
+     * Tests if this component is actually rendered and ready to use (templates, references, listeners).
+     * @returns true if it is initialized, false otherwise
+     */
+    get isRendered() {
+        return this._rendered;
+    }
     // Lifecycle management
     connectedCallback() {
-        console.log(`Adding listeners to ${this._componentName}!`);
-        for (const compRef in this._listeners) {
-            const compListeners = this._listeners[compRef];
-            for (const event in compListeners) {
-                (compRef !== 'this' ? this.getRef(compRef) : this).addEventListener(event, compListeners[event]);
-            }
+        // View template init
+        this.innerHTML = typeof this.template === 'function' ? this.template(this._props) : '';
+        // References init
+        this._refs = {};
+        if (typeof this.references === 'function') {
+            const references = this.references();
+            (Object.getOwnPropertyNames(references) || []).forEach(refName => this._refs[refName] = this.querySelector(references[refName]));
         }
+        // Listeners registration
+        this._listeners = {};
+        if (typeof this.listeners === 'function') {
+            this._listeners = this.listeners() || {};
+        }
+        log.debug(`Adding listeners to ${this._componentName}!`);
+        Object.getOwnPropertyNames(this._listeners).forEach(compRef => {
+            const compListeners = this._listeners[compRef];
+            Object.getOwnPropertyNames(compListeners).forEach(event => {
+                (compRef !== 'this' ? this.getRef(compRef) : this).addEventListener(event, compListeners[event]);
+            });
+        });
+        this._initialized = true;
     }
     disconnectedCallback() {
-        console.log(`Removing listeners from ${this._componentName}!`);
-        for (const compRef in this._listeners) {
+        log.debug(`Removing listeners from ${this._componentName}!`);
+        Object.getOwnPropertyNames(this._listeners).forEach(compRef => {
             const compListeners = this._listeners[compRef];
-            for (const event in compListeners) {
+            Object.getOwnPropertyNames(compListeners).forEach(event => {
                 (compRef !== 'this' ? this.getRef(compRef) : this).removeEventListener(event, compListeners[event]);
-            }
-        }
+            });
+        });
     }
     attributeChangedCallback(name, oldValue, newValue) {
-        console.log(`Updated ${name} from ${oldValue} to ${newValue} on ${this._componentName}!`);
+        log.debug(`Updated ${name} from ${oldValue} to ${newValue} on ${this._componentName}!`);
     }
 }

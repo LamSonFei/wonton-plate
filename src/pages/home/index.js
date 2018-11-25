@@ -1,7 +1,10 @@
 'use strict';
 
-import { BasePage } from '../base/index.js';
-import { HelloWorld } from './../../components/hello-world/index.js';
+import template from './template.html';
+
+import log from 'services/log';
+import { BasePage } from 'pages/base';
+import 'components/hello-world';
 
 export class HomePage extends BasePage {
     constructor(props) {
@@ -11,7 +14,7 @@ export class HomePage extends BasePage {
         return 'page-hello-world';
     }
     template(props) {
-        return `<hello-world class="my-hello-world-component" name="${props.userName}"></hello-world>`;
+        return template.replace(/\[props\.userName\]/g, props.userName);
     }
     references() {
         return {
@@ -21,7 +24,7 @@ export class HomePage extends BasePage {
     connectedCallback() {
         super.connectedCallback();
         setTimeout((() => {
-            console.log('Dispatching a click event on hello world component!')
+            log.debug('Dispatching a click event on hello world component!')
             this.getRef('helloWorldComponent').dispatchEvent(new Event('click'));
         }).bind(this), 0)
     }
