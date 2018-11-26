@@ -22,7 +22,7 @@ export class LocaleChooser extends BaseComponent {
         return `
             <select class="cmp-locale-chooser_select">
                 <option class="cmp-locale-chooser_option-default" value=""></option>
-                ${props.localeOptions}
+                ${props.localeOptions.reduce((elements, option) => elements + option, '')}
             </select>
         `;
     }

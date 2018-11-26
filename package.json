@@ -4,7 +4,7 @@
   "description": "Template for web applications using web components",
   "author": "Adrien Nortain",
   "license": "ISC",
-  "sideEffects": false,
+  "sideEffects": true,
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "watch": "webpack --watch",
