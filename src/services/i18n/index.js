@@ -36,22 +36,35 @@ export class I18nService extends BaseComponent {
     get bundleMap() {
         return this._bundleMap;
     }
+    // Methods
+    /**
+     * Adds a bundle to be merged to the currently managed one.
+     * @param {Object} bundle the bundle to load
+     * @param {String} locale the locale of the bundle
+     */
     addBundle(bundle, locale) {
         locale = locale || this.locale;
         this._bundleMap[locale] = merge(this._bundleMap[locale] || {}, bundle);
     }
+    /**
+     * Gets a translation.
+     * @param {String} path the path to the translation in the loaded bundle
+     * @param {Object} params the parameters values replacing ${key} placeholders in the retrieved translation
+     * @return the translation if found, an empty string otherwise
+     */
     t(path, params = {}) {
         let text = get(this._bundleMap[this.locale], path);
         return Object.getOwnPropertyNames(params).reduce((formattedText, param) => {
             return formattedText.replace(new RegExp("\\$\\{" + param + "\\}", "g"), params[param]);
         }, text || '');
     }
-    subscribe(cmp) {
-        return this._localeBroadcaster.subscribe(locale => {
-            if (typeof cmp.localeChangedCallback === 'function') {
-                cmp.localeChangedCallback.call(cmp, locale);
-            }
-        });
+    /**
+     * Subscribes to this service to get the current locale at any time.
+     * @param {Object|Function} config the callback configuration
+     * @return the subscription
+     */
+    subscribe(config) {
+        return this._localeBroadcaster.subscribe(config);
     }
     // Observed attributes
     static get observedAttributes() {

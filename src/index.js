@@ -32,10 +32,7 @@ merge(
         document.querySelector('.page').append(new HomePage({userName: 'Jim'}));
         document.querySelector('.footer').append(new LocaleChooser());
 
-        log.info('Application ready!')
-        
-        // Webpack HRM
-        if (module.hot) module.hot.accept('./index.js', () => location.reload());
+        log.info('Application ready!');
         
         // Webpack PWA
         if ('serviceWorker' in navigator) {

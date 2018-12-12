@@ -2,11 +2,13 @@
 
 import { BaseComponent } from "../base/index.js";
 import i18n from './../../services/i18n/index.js';
+import { I18nComponent } from 'components/mixins/i18n';
+import { mix } from 'utils/mixins';
 
 /**
  * Locale chooser demo component.
  */
-export class LocaleChooser extends BaseComponent {
+export class LocaleChooser extends mix(BaseComponent).with(I18nComponent) {
     // Init
     constructor(props = {}) {
         // Extending props for the template
@@ -39,22 +41,10 @@ export class LocaleChooser extends BaseComponent {
             }
         }
     }
-    refreshInnerTexts() {
+    localeChangedCallback(locale) {
         this.getRef('optionDefault').innerText = i18n.t('cmp.locale-chooser.choose-one');
         i18n.supportedLocales.forEach(locale => this.querySelector(`.cmp-locale-chooser_option-${locale}`).innerText = i18n.t(`cmp.locale-chooser.${locale}`));
-    }
-    localeChangedCallback(locale) {
-        this.refreshInnerTexts();
         this.getRef('localeSelect').value = locale;
-    }
-    connectedCallback() {
-        super.connectedCallback();
-        this._i18nSubscription = i18n.subscribe(this);
-        this.refreshInnerTexts();
-    }
-    disconnectedCallback() {
-        super.disconnectedCallback();
-        this._i18nSubscription.unsubscribe();
     }
 }
 

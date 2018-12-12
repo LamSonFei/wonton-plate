@@ -3,13 +3,16 @@
 import template from './template.html';
 
 import log from 'services/log';
-import { BaseComponent } from "components/base";
 import i18n from 'services/i18n';
+import { BaseComponent } from "components/base";
+import { I18nComponent } from 'components/mixins/i18n';
+import { mix } from 'utils/mixins';
+
 
 /**
  * Hello World demo component.
  */
-export class HelloWorld extends BaseComponent {
+export class HelloWorld extends mix(BaseComponent).with(I18nComponent) {
     // Init
     constructor() {
         super();
@@ -59,11 +62,6 @@ export class HelloWorld extends BaseComponent {
     localeChangedCallback() {
         this.refreshInnerTexts();
     }
-    connectedCallback() {
-        super.connectedCallback();
-        this._i18nSubscription = i18n.subscribe(this);
-        this.refreshInnerTexts();
-    }
     attributeChangedCallback(name, oldValue, newValue) {
         super.attributeChangedCallback(name, oldValue, newValue);
         if (!this.isRendered || oldValue === newValue) return;
@@ -73,10 +71,6 @@ export class HelloWorld extends BaseComponent {
                 break;
             default:
         }
-    }
-    disconnectedCallback() {
-        super.disconnectedCallback();
-        this._i18nSubscription.unsubscribe();
     }
 }
 
