@@ -22,10 +22,13 @@ export class LocaleChooser extends mix(BaseComponent).with(I18nComponent) {
     }
     template(props) {
         return `
-            <select class="cmp-locale-chooser_select">
-                <option class="cmp-locale-chooser_option-default" value=""></option>
-                ${props.localeOptions.reduce((elements, option) => elements + option, '')}
-            </select>
+            <label>
+                Lang:
+                <select class="cmp-locale-chooser_select">
+                    <option class="cmp-locale-chooser_option-default" value=""></option>
+                    ${props.localeOptions.reduce((elements, option) => elements + option, '')}
+                </select>
+            </label>
         `;
     }
     references() {

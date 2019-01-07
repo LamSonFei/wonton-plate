@@ -1,5 +1,6 @@
 /* Components */
 @import "./components/hello-world/styles.css";
+@import "./components/link/styles.css";
 
 /* Pages */
 @import "./pages/home/styles.css";
@@ -34,6 +35,7 @@
 }
 .header {
     align-items: flex-start;
+    justify-content: space-between;
 }
 .footer {
     align-items: flex-end;

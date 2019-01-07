@@ -14,14 +14,28 @@ export class BaseComponent extends HTMLElement {
      */
     constructor(props = {}) {
         super();
-        this.classList.add('cmp-base');
         // Properties init
         this._props = props || {};
         // Component name is used for logging and styling
         this._componentName = 'some-cmp';
         if (typeof this.componentName === 'function') {
-            this.classList.add(this.componentName());
             this._componentName = this.componentName() || 'some-cmp';
+        }
+        // Properties/attributes definition
+        if (typeof this.propertiesAttributes === 'function') {
+            const propertiesAttributes = this.propertiesAttributes();
+            if (propertiesAttributes && propertiesAttributes.length) {
+                propertiesAttributes.forEach(property => {
+                    Object.defineProperty(this, property, {
+                        set: function(value) {
+                            this.setAttribute(property, value);
+                        },
+                        get: function() {
+                            return this.getAttribute(property);
+                        }
+                    });
+                });
+            }
         }
         // Tracker to know when to use listeners, getRef...
         this._rendered = false;
@@ -55,6 +69,9 @@ export class BaseComponent extends HTMLElement {
     }
     // Lifecycle management
     connectedCallback() {
+        // Class information
+        this.classList.add('cmp-base');
+        this.classList.add(this.componentName());
         // View template init
         this.innerHTML = typeof this.template === 'function' ? this.template(this._props) : '';
         // References init
@@ -75,7 +92,7 @@ export class BaseComponent extends HTMLElement {
                 (compRef !== 'this' ? this.getRef(compRef) : this).addEventListener(event, compListeners[event]);
             });
         });
-        this._initialized = true;
+        this._rendered = true;
     }
     disconnectedCallback() {
         log.debug(`Removing listeners from ${this._componentName}!`);

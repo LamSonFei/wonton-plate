@@ -12,7 +12,8 @@ module.exports = merge(common, {
     },
     devServer: {
         contentBase: './dev',
-        hot: true
+        hot: true,
+        historyApiFallback: true
     },
     plugins: [
         new CleanWebpackPlugin(['dev']),
