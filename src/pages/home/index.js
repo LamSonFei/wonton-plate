@@ -21,6 +21,9 @@ export class HomePage extends BasePage {
             'helloWorldComponent': '.my-hello-world-component'
         }
     }
+    set helloName(userName) {
+        this.getRef('helloWorldComponent').name = userName;
+    }
     connectedCallback() {
         super.connectedCallback();
         setTimeout((() => {

@@ -1,3 +1,5 @@
+import RoutePath from "./routePath";
+
 class RouterService {
     static get instance() {
         if (!RouterService._instance) {
@@ -8,9 +10,16 @@ class RouterService {
     }
     subscribe(target, routes) {
         this._bindings = this._bindings || [];
+        let preparedRoutes = routes.map(route => {
+            let routePaths = route.paths.map(path => new RoutePath(path));
+            return {
+                ...route,
+                routePaths
+            };
+        });
         const binding = {
             target: target,
-            routes: routes
+            routes: preparedRoutes
         };
         this._bindings.push(binding);
         this._updateBinding(binding);
@@ -34,13 +43,22 @@ class RouterService {
         
         this._bindings.forEach(binding => {
             binding.routes.forEach(route => {
-                if (route.paths.includes(path)) {
-                    if (binding.target.lastChild) {
+                route.routePaths.some(routePath => {
+                    if (!routePath.matches(path)) return false;
+                    while (binding.target.lastChild) {
                         binding.target.removeChild(binding.target.lastChild);
                     }
                     const component = document.createElement(route.component);
                     binding.target.appendChild(component);
-                }
+                    const pathVariables = routePath.getPathVariables(path);
+                    Object.keys(pathVariables).forEach(key => {
+                        const targetedProperty = route.propertiesMapping[key];
+                        if (targetedProperty) {
+                            component[targetedProperty] = pathVariables[key];
+                        }
+                    });
+                    return true;
+                });
             });
         });
     }
@@ -56,13 +74,22 @@ class RouterService {
     _updateBinding(binding) {
         const currentPath = window.location.pathname;
         binding.routes.forEach(route => {
-            if (route.paths.includes(currentPath)) {
-                if (binding.target.lastChild) {
+            route.routePaths.some(routePath => {
+                if (!routePath.matches(currentPath)) return false;
+                while (binding.target.lastChild) {
                     binding.target.removeChild(binding.target.lastChild);
                 }
                 const component = document.createElement(route.component);
                 binding.target.appendChild(component);
-            }
+                const pathVariables = routePath.getPathVariables(currentPath);
+                Object.keys(pathVariables).forEach(key => {
+                    const targetedProperty = route.propertiesMapping[key];
+                    if (targetedProperty) {
+                        component[targetedProperty] = pathVariables[key];
+                    }
+                });
+                return true;
+            });
         });
     }
 

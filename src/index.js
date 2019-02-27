@@ -44,6 +44,10 @@ merge(
         homeLink.setAttribute('path', '/home');
         homeLink.setAttribute('label', 'Home');
         header.append(homeLink);
+        const homeJohnLink = new Link();
+        homeJohnLink.path = '/home/John';
+        homeJohnLink.label = 'John\'s space';
+        header.append(homeJohnLink);
         const formLink = new Link();
         formLink.label = 'Form';
         formLink.path = '/form';

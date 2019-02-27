@@ -7,7 +7,8 @@ module.exports = {
         app: './src/index.js'
     },
     output: {
-        filename: '[name].bundle.[hash].js'
+        filename: '[name].bundle.[hash].js',
+        publicPath: '/'
     },
     plugins: [
         new HtmlWebpackPlugin({

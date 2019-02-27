@@ -6,8 +6,8 @@
             "/home/:userName"
         ],
         "component": "page-home",
-        "props": {
-            "userName": ":userName"
+        "propertiesMapping": {
+            "userName": "helloName"
         }
     },
     {
