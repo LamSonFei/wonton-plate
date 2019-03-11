@@ -1,14 +1,22 @@
 'use strict';
 
 // Webpack styles imports
-import './styles.css'
+import './styles.css';
 
 // Dependencies imports
-import log from 'services/log';
-import { HomePage } from 'pages/home';
-import { LocaleChooser } from './components/locale-chooser/index.js';
-import i18n from './services/i18n/index.js';
 import { merge, from } from "rxjs";
+
+import log from 'services/log';
+import i18n from 'services/i18n';
+import router from 'services/router';
+
+import 'pages/home';
+import 'pages/form';
+
+import { LocaleChooser } from 'components/locale-chooser';
+import { Link } from 'components/link'
+
+import routes from './routes.json';
 
 log.level = process.env.RUN_MODE === 'production' ? 'error' : 'debug';
 
@@ -27,9 +35,25 @@ merge(
     next: bundle => i18n.addBundle(bundle, i18n.defaultLocale),
     complete: () => {
         log.debug('Localization bundles loaded!');
+
+        log.debug('Initializing routes!');
+        router.subscribe(document.querySelector('.page'), routes);
         
-        document.querySelector('.header').append(new LocaleChooser());
-        document.querySelector('.page').append(new HomePage({userName: 'Jim'}));
+        const header = document.querySelector('.header');
+        const homeLink = document.createElement('router-link');
+        homeLink.setAttribute('path', '/home');
+        homeLink.setAttribute('label', 'Home');
+        header.append(homeLink);
+        const homeJohnLink = new Link();
+        homeJohnLink.path = '/home/John';
+        homeJohnLink.label = 'John\'s space';
+        header.append(homeJohnLink);
+        const formLink = new Link();
+        formLink.label = 'Form';
+        formLink.path = '/form';
+        header.append(formLink);
+        header.append(new LocaleChooser());
+
         document.querySelector('.footer').append(new LocaleChooser());
 
         log.info('Application ready!');

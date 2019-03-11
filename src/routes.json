@@ -1,0 +1,19 @@
+[
+    {
+        "paths": [
+            "/",
+            "/home",
+            "/home/:userName"
+        ],
+        "component": "page-home",
+        "propertiesMapping": {
+            "userName": "helloName"
+        }
+    },
+    {
+        "paths": [
+            "/form"
+        ],
+        "component": "page-form"
+    }
+]

@@ -14,12 +14,15 @@ export class HomePage extends BasePage {
         return 'page-home';
     }
     template(props) {
-        return template.replace(/\[props\.userName\]/g, props.userName);
+        return template.replace(/\[props\.userName\]/g, props.userName || 'World');
     }
     references() {
         return {
             'helloWorldComponent': '.my-hello-world-component'
         }
+    }
+    set helloName(userName) {
+        this.getRef('helloWorldComponent').name = userName;
     }
     connectedCallback() {
         super.connectedCallback();
@@ -30,4 +33,4 @@ export class HomePage extends BasePage {
     }
 }
 
-customElements.define('home-page', HomePage);
+customElements.define('page-home', HomePage);

@@ -38,16 +38,6 @@ export class HelloWorld extends mix(BaseComponent).with(I18nComponent) {
             }
         }
     }
-    // Properties
-    get name() {
-        return this.getAttribute('name');
-    }
-    set name(name) {
-        this.setAttribute('name', name);
-    }
-    get helloWorldMessage() {
-        return i18n.t('cmp.hello-world.hello', {name: this.name || i18n.t('cmp.hello-world.world')});
-    }
     // Methods
     sayHello() {
         alert(this.helloWorldMessage);
@@ -55,10 +45,19 @@ export class HelloWorld extends mix(BaseComponent).with(I18nComponent) {
     refreshInnerTexts() {
         this.getRef('helloWorldButton').innerText = this.helloWorldMessage;
     }
+    // Computed properties
+    get helloWorldMessage() {
+        return i18n.t('cmp.hello-world.hello', {name: this.name || i18n.t('cmp.hello-world.world')});
+    }
+    // Properties attributes
+    propertiesAttributes() {
+        return ['name'];
+    }
     // Observed attributes
     static get observedAttributes() {
         return ['name'];
     }
+    // Listeners
     localeChangedCallback() {
         this.refreshInnerTexts();
     }

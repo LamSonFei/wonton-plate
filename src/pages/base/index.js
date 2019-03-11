@@ -7,10 +7,10 @@ import { BaseComponent } from 'components/base';
 export class BasePage extends BaseComponent {
     constructor(props) {
         super(props);
-        this.classList.add('page-base');
     }
     connectedCallback() {
         super.connectedCallback();
+        this.classList.add('page-base');
         log.debug('Connected page!')
     }
     disconnectedCallback() {
