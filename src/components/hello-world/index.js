@@ -17,6 +17,9 @@ export class HelloWorld extends mix(BaseComponent).with(I18nComponent) {
     constructor() {
         super();
     }
+    useShadowDOM() {
+        return true;
+    }
     componentName() {
         return 'cmp-hello-world';
     }
