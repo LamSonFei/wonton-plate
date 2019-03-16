@@ -2,7 +2,8 @@
 
 import { BaseComponent } from "components/base";
 import { BehaviorSubject } from "rxjs";
-import { get, merge } from "lodash";
+import get from "lodash/get";
+import merge from "lodash/merge";
 
 /**
  * Internationalization service component.
