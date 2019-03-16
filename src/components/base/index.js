@@ -22,27 +22,18 @@ export class BaseComponent extends HTMLElement {
             this._componentName = this.componentName() || 'some-cmp';
         }
         // Properties/attributes definition
-        if (typeof this.propertiesAttributes === 'function') {
-            const propertiesAttributes = this.propertiesAttributes();
-            if (propertiesAttributes && propertiesAttributes.length) {
-                propertiesAttributes.forEach(property => {
-                    Object.defineProperty(this, property, {
-                        set: function(value) {
-                            this.setAttribute(property, value);
-                        },
-                        get: function() {
-                            return this.getAttribute(property);
-                        }
-                    });
-                });
-            }
-        }
+        this._initPropertiesAttributes();
         // Tracker to know when to use listeners, getRef...
         this._rendered = false;
         // Methods bindings
-        Object.getOwnPropertyNames(this)
-            .filter(p => typeof this[p] === 'function')
-            .map(fn => this[fn].bind(this));
+        this._initClassMethodsBinding();
+        // Init shadow if needed
+        if (this.useShadowDOM()) {
+            // View template init
+            this._injectTemplate();
+            // References init
+            this._initReferences();
+        }
     }
     // Utilities
     /**
@@ -67,20 +58,78 @@ export class BaseComponent extends HTMLElement {
     get isRendered() {
         return this._rendered;
     }
+    /**
+     * Override to return true to use Shadow DOM inside the custom element.
+     */
+    useShadowDOM() {
+        return false;
+    }
     // Lifecycle management
     connectedCallback() {
         // Class information
         this.classList.add('cmp-base');
         this.classList.add(this.componentName());
-        // View template init
-        this.innerHTML = typeof this.template === 'function' ? this.template(this._props) : '';
-        // References init
+        if (!this.useShadowDOM()) {
+            // View template init
+            this._injectTemplate();
+            // References init
+            this._initReferences();
+        }
+        // Listeners registration
+        this._initListeners();
+    }
+    disconnectedCallback() {
+        this._cleanListeners();
+    }
+    attributeChangedCallback(name, oldValue, newValue) {
+        log.debug(`Updated ${name} from ${oldValue} to ${newValue} on ${this._componentName}!`);
+    }
+
+    // Internal implementation
+    _initPropertiesAttributes() {
+        if (typeof this.propertiesAttributes === 'function') {
+            const propertiesAttributes = this.propertiesAttributes();
+            if (propertiesAttributes && propertiesAttributes.length) {
+                propertiesAttributes.forEach(property => {
+                    Object.defineProperty(this, property, {
+                        set: function(value) {
+                            this.setAttribute(property, value);
+                        },
+                        get: function() {
+                            return this.getAttribute(property);
+                        }
+                    });
+                });
+            }
+        }
+    }
+    _initClassMethodsBinding() {
+        Object.getOwnPropertyNames(this)
+            .filter(p => typeof this[p] === 'function')
+            .map(fn => this[fn].bind(this));
+    }
+
+    _injectTemplate() {
+        const html = typeof this.template === 'function' ? this.template(this._props) : '';
+        if (this.useShadowDOM()) {
+            this.attachShadow({ mode: 'open' });
+            this.shadowRoot.innerHTML = html;
+        } else {
+            this.innerHTML = html;
+        }
+        // Update the rendered state
+        this._rendered = true;
+    }
+
+    _initReferences() {
         this._refs = {};
         if (typeof this.references === 'function') {
             const references = this.references();
-            (Object.getOwnPropertyNames(references) || []).forEach(refName => this._refs[refName] = this.querySelector(references[refName]));
+            (Object.getOwnPropertyNames(references) || []).forEach(refName => this._refs[refName] = (this.useShadowDOM() ? this.shadowRoot : this).querySelector(references[refName]));
         }
-        // Listeners registration
+    }
+
+    _initListeners() {
         this._listeners = {};
         if (typeof this.listeners === 'function') {
             this._listeners = this.listeners() || {};
@@ -92,9 +141,9 @@ export class BaseComponent extends HTMLElement {
                 (compRef !== 'this' ? this.getRef(compRef) : this).addEventListener(event, compListeners[event]);
             });
         });
-        this._rendered = true;
     }
-    disconnectedCallback() {
+
+    _cleanListeners() {
         log.debug(`Removing listeners from ${this._componentName}!`);
         Object.getOwnPropertyNames(this._listeners).forEach(compRef => {
             const compListeners = this._listeners[compRef];
@@ -102,8 +151,5 @@ export class BaseComponent extends HTMLElement {
                 (compRef !== 'this' ? this.getRef(compRef) : this).removeEventListener(event, compListeners[event]);
             });
         });
-    }
-    attributeChangedCallback(name, oldValue, newValue) {
-        log.debug(`Updated ${name} from ${oldValue} to ${newValue} on ${this._componentName}!`);
     }
 }

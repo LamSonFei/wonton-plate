@@ -1,9 +1,9 @@
 'use strict';
 
+import './styles.css';
 import template from './template.html';
 
 import log from 'services/log';
-import i18n from 'services/i18n';
 import { BaseComponent } from "components/base";
 import { I18nComponent } from 'components/mixins/i18n';
 import { mix } from 'utils/mixins';
@@ -13,10 +13,6 @@ import { mix } from 'utils/mixins';
  * Hello World demo component.
  */
 export class HelloWorld extends mix(BaseComponent).with(I18nComponent) {
-    // Init
-    constructor() {
-        super();
-    }
     componentName() {
         return 'cmp-hello-world';
     }
@@ -40,14 +36,19 @@ export class HelloWorld extends mix(BaseComponent).with(I18nComponent) {
     }
     // Methods
     sayHello() {
-        alert(this.helloWorldMessage);
+        this.dispatchEvent(new CustomEvent('hello', { 
+            bubbles: true, 
+            detail: {
+                name: this.name
+            }
+        }));
     }
     refreshInnerTexts() {
         this.getRef('helloWorldButton').innerText = this.helloWorldMessage;
     }
     // Computed properties
     get helloWorldMessage() {
-        return i18n.t('cmp.hello-world.hello', {name: this.name || i18n.t('cmp.hello-world.world')});
+        return this.i18n('cmp.hello-world.hello', {name: this.name || this.i18n('cmp.hello-world.world')});
     }
     // Properties attributes
     propertiesAttributes() {
@@ -56,6 +57,10 @@ export class HelloWorld extends mix(BaseComponent).with(I18nComponent) {
     // Observed attributes
     static get observedAttributes() {
         return ['name'];
+    }
+    // i18n
+    i18nFilesPath() {
+        return 'components/hello-world/i18n';
     }
     // Listeners
     localeChangedCallback() {

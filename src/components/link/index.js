@@ -1,3 +1,7 @@
+'use strict';
+
+import './styles.css';
+
 import Router from 'services/router'
 import { BaseComponent } from 'components/base';
 

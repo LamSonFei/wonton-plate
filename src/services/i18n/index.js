@@ -12,9 +12,14 @@ export class I18nService extends BaseComponent {
     constructor() {
         super();
         // Bundle loading
+        this._loadedBundles = [];
+        this._pending = this.supportedLocales.reduce((pending, locale) => {
+            pending[locale] = 0;
+            return pending;
+        }, {});
         this._bundleMap = {};
-        this._localeBroadcaster = new BehaviorSubject();
-        this._localeBroadcaster.next('en');
+        this._updateBroadcaster = new BehaviorSubject();
+        this._updateBroadcaster.next('en');
     }
     componentName() {
         return 'i18n-service';
@@ -31,7 +36,7 @@ export class I18nService extends BaseComponent {
     }
     set locale(locale) {
         this.setAttribute('locale', locale);
-        this._localeBroadcaster.next(locale);
+        this._updateBroadcaster.next(locale);
     }
     get bundleMap() {
         return this._bundleMap;
@@ -41,10 +46,27 @@ export class I18nService extends BaseComponent {
      * Adds a bundle to be merged to the currently managed one.
      * @param {Object} bundle the bundle to load
      * @param {String} locale the locale of the bundle
+     * 
+     * @return {Promise} the import completion promise
      */
     addBundle(bundle, locale) {
         locale = locale || this.locale;
-        this._bundleMap[locale] = merge(this._bundleMap[locale] || {}, bundle);
+        if (!this.supportedLocales.includes(locale)) return;
+        const bundleKey = `${bundle}||${locale}`
+        if (this._loadedBundles.includes(bundleKey)) return;
+
+        this._loadedBundles.push(bundleKey);
+
+        this._pending[locale]++;
+        
+        return import(`../../${bundle}/${locale}.json`).then(json => {
+            this._bundleMap[locale] = merge(this._bundleMap[locale] || {}, json);
+            console.log(`Added i18n bundle at ${bundle} for locale ${locale}`);
+            this._pending[locale]--;
+            if (this.locale === locale && this._pending[locale] === 0) {
+                this._updateBroadcaster.next(locale);
+            }
+        });
     }
     /**
      * Gets a translation.
@@ -64,7 +86,7 @@ export class I18nService extends BaseComponent {
      * @return the subscription
      */
     subscribe(config) {
-        return this._localeBroadcaster.subscribe(config);
+        return this._updateBroadcaster.subscribe(config);
     }
     // Observed attributes
     static get observedAttributes() {
@@ -74,7 +96,7 @@ export class I18nService extends BaseComponent {
         super.attributeChangedCallback(name, oldValue, newValue);
         if (oldValue === newValue) return;
         if (name === 'locale') {
-            this._localeBroadcaster.next(this.locale);
+            this._updateBroadcaster.next(this.locale);
         }
     }
     static get instance() {
