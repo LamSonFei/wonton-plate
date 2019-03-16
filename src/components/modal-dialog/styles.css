@@ -1,0 +1,61 @@
+.modal-dialog-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.75);
+  z-index: 10;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.modal-dialog-anchor {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.modal-dialog-window {
+  flex-grow: 0;
+  width: auto;
+  background: white;
+  z-index: 100;
+  opacity: 0;
+  pointer-events: none;
+  padding: 15px;
+}
+
+.modal-dialog-footer {
+    text-align: right;
+}
+
+:host([opened]) .modal-dialog-backdrop,
+:host([opened]) .modal-dialog-window {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.modal-dialog-btn-cancel {
+  background-color: var(--modal-dialog-cancel-bg-color, orange);
+}
+
+.modal-dialog-btn-ok {
+  background-color: var(--modal-dialog-ok-bg-color, green);
+}
+
+::slotted(h1) {
+  color: red;
+  font-size: 1.25rem;
+  margin: 0;
+}
+
+::slotted(.modal-dialog-message) {
+  color: red;
+}

@@ -6,11 +6,17 @@ import i18n from 'services/i18n';
  * @description In order for the mixin to work, the class using it must not extend connectedCallback 
  * or disconnectedCallback without calling the parent implementation.
  * Once the mixin is applied, the class should provide its own {@link I18nComponent#localeChangedCallback} implementation
- * to react on a locale change.
+ * to react on a locale change. The targeted class can also access the i18n service translation method by calling the {@link I18nComponent#i18n} function.
  * @param {Class} clazz the class to bind
  */
 export function I18nComponent(clazz) {
     return class extends clazz {
+        constructor(props) {
+            super(props);
+            i18n.supportedLocales.forEach(locale => {
+                i18n.addBundle(this.i18nFilesPath(), locale);
+            });
+        }
 
         /**
          * Hook to the lifecycle of the component to subscribe to the i18n service.
@@ -38,6 +44,13 @@ export function I18nComponent(clazz) {
          */
         localeChangedCallback(locale) {
             log.debug(`Locale change to ${locale} detected by ${this.componentName()}`);
+        }
+
+        /**
+         * Executes a translation job.
+         */
+        i18n() {
+            return i18n.t.apply(i18n, arguments);
         }
 
         /**

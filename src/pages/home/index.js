@@ -1,10 +1,12 @@
 'use strict';
 
+import './styles.css';
 import template from './template.html';
 
 import log from 'services/log';
 import { BasePage } from 'pages/base';
 import 'components/hello-world';
+import 'components/modal-dialog';
 
 export class HomePage extends BasePage {
     constructor(props) {
@@ -18,7 +20,21 @@ export class HomePage extends BasePage {
     }
     references() {
         return {
-            'helloWorldComponent': '.my-hello-world-component'
+            'helloWorldComponent': '.my-hello-world-component',
+            'modalDialog': '.my-modal-dialog',
+            'modalDialogTitle': '.hello-modal-title',
+            'modalDialogBody': '.hello-modal-body'
+        }
+    }
+    listeners() {
+        return {
+            'helloWorldComponent': {
+                'hello': e => {
+                    this.getRef('modalDialogTitle').innerText = `Hello ${e.detail.name || 'World'}!`
+                    this.getRef('modalDialogBody').innerText = `How are you today, ${e.detail.name || 'World'}?`
+                    this.getRef('modalDialog').open();
+                }
+            }
         }
     }
     set helloName(userName) {

@@ -1,5 +1,7 @@
 'use strict';
 
+import './styles.css';
+
 import { BaseComponent } from "../base/index.js";
 import i18n from './../../services/i18n/index.js';
 import { I18nComponent } from 'components/mixins/i18n';
@@ -43,6 +45,9 @@ export class LocaleChooser extends mix(BaseComponent).with(I18nComponent) {
                 'change': () => i18n.locale = this.getRef('localeSelect').value || i18n.locale
             }
         }
+    }
+    i18nFilesPath() {
+        return 'components/locale-chooser/i18n';
     }
     localeChangedCallback(locale) {
         this.getRef('optionDefault').innerText = i18n.t('cmp.locale-chooser.choose-one');
