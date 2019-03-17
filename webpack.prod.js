@@ -8,7 +8,6 @@ const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPl
 
 module.exports = merge(common, {
   mode: 'production',
-  devtool: 'source-map',
   output: {
       path: path.resolve(__dirname, 'dist')
   },
@@ -18,7 +17,8 @@ module.exports = merge(common, {
         RUN_MODE: 'production'
       }),
       new BundleAnalyzerPlugin({
-        generateStatsFile: true
+        analyzerMode: 'static',
+        openAnalyzer: false
       })
   ]
 });

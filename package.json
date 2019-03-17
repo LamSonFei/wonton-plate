@@ -8,7 +8,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "watch": "webpack --watch",
-    "start": "webpack --config webpack.dev.js && webpack-dev-server --open --config webpack.dev.js",
+    "dev-server": "webpack --config webpack.dev.js && webpack-dev-server --open --config webpack.dev.js",
+    "start": "node index.js",
     "build": "webpack --config webpack.prod.js"
   },
   "repository": {
@@ -20,6 +21,8 @@
   },
   "homepage": "https://github.com/Zenika/wanton-template#readme",
   "dependencies": {
+    "express": "^4.16.4",
+    "express-history-api-fallback": "^2.2.1",
     "lodash": "^4.17.11",
     "rxjs": "^6.3.3"
   },
