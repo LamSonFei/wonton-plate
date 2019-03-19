@@ -5,7 +5,7 @@ jobs:
       # specify the version you desire here
       - image: circleci/node:7.10
 
-    working_directory: ~/wanton-template
+    working_directory: ~/wonton-plate
 
     steps:
       - checkout
@@ -29,7 +29,7 @@ jobs:
       
       # store artifact
       - store_artifacts:
-          path: ~/wanton-template/dist
+          path: ~/wonton-plate/dist
 
   deploy:
     docker:
@@ -39,7 +39,7 @@ jobs:
       - run:
           name: Deploy Master to Heroku
           command: |
-            git push https://heroku:$HEROKU_API_KEY@git.heroku.com/wanton-template.git master --force
+            git push https://heroku:$HEROKU_API_KEY@git.heroku.com/wonton-plate.git master --force
 
 workflows:
   version: 2

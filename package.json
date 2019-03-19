@@ -1,5 +1,5 @@
 {
-  "name": "wanton",
+  "name": "wonton-plate",
   "version": "0.1.0",
   "description": "Template for web applications using web components",
   "author": "Adrien Nortain",
@@ -14,12 +14,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Zenika/wanton-template.git"
+    "url": "git+https://github.com/LamSonFei/wonton-plate.git"
   },
   "bugs": {
-    "url": "https://github.com/Zenika/wanton-template/issues"
+    "url": "https://github.com/LamSonFei/wonton-plate/issues"
   },
-  "homepage": "https://github.com/Zenika/wanton-template#readme",
+  "homepage": "https://github.com/LamSonFei/wonton-plate#readme",
   "dependencies": {
     "express": "^4.16.4",
     "express-history-api-fallback": "^2.2.1",
