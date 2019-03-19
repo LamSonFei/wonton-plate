@@ -20,8 +20,9 @@ To launch the built application:
  ```
 <br />
 This project is automatically built using [Circle CI](https://circleci.com).<br />
-A demo is also available, thanks to [Heroku](https://www.heroku.com), at https://wonton-plate.herokuapp.com.
+A demo is also available, thanks to [Heroku](https://www.heroku.com), at https://wonton-plate.herokuapp.com.<br />
 <br />
+This project started at https://github.com/Zenika/wanton-template, but got moved to a personal repository by its author.<br />
+You can can find the issue board here: https://github.com/LamSonFei/wonton-plate/issues.<br />
 <br />
-This project started at https://github.com/Zenika/wanton-template, but got moved to a personal repository by its author.
-You can can find the issue board here: https://github.com/LamSonFei/wonton-plate/issues.
+A fork is always available for Zenika at: https://github.com/Zenika/wonton-plate.
