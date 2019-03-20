@@ -1,4 +1,5 @@
 .cmp-link-button {
-    border: none;
-    background: none;
+    cursor: pointer;
+    text-decoration: none;
+    color: black;
 }

@@ -10,7 +10,7 @@ export class Link extends BaseComponent {
         return 'cmp-link';
     }
     template() {
-        return `<button class="cmp-link-button" type="button">${this.label}</button>`;
+        return `<a class="cmp-link-button" href="${this.path}">${this.label}</a>`;
     }
     references() {
         return {
@@ -20,8 +20,11 @@ export class Link extends BaseComponent {
     listeners() {
         return {
             'link': {
-                'click': () => {
-                    Router.navigateTo(this.path);
+                'click': e => {
+                    if (!e.ctrlKey && !e.metaKey) {
+                        e.preventDefault();
+                        Router.navigateTo(this.path);
+                    }
                 }
             }
         };

@@ -1,5 +1,53 @@
 <form class="page-form-form">
-    <input type="text" name="firstname" label="First Name" placeholder="First Name" />
-    <input type="text" name="lastname" label="Last Name" placeholder="Last Name" />
+  <label>
+    <span>Full Name</span>
+    <input type="text" name="name" placeholder="First Name" />
+  </label>
+  <label>
+    <span>Date of birth</span>
+    <input type="date" name="dob" />
+  </label>
+  <label>
+    <span>Nationality</span>
+    <select name="nationality"></select>
+  </label>
+  <label class="input-checkbox">
+    <span>Married</span>
+    <input type="checkbox" name="married" />
+  </label>
+  <label>
+    <span>Number of children</span>
+    <input type="number" name="children" min="0" max="20" />
+  </label>
+  <label>
+    <span>Preferred hour</span>
+    <input type="time" name="preferred" />
+  </label>
+  <label>
+    <span>Gender</span>
+    <label class="input-radio-option">
+      <input type="radio" value='F' name="gender" />
+      <span>Female</span>
+    </label>
+    <label class="input-radio-option">
+      <input type="radio" value='M' name="gender" />
+      <span>Male</span>
+    </label>
+    <label class="input-radio-option">
+      <input type="radio" value='O' name="gender" />
+      <span>Other</span>
+    </label>
+  </label>
+  <label>
+    <span>Email</span>
+    <input type="email" name="email" placeholder="someone@mail.com" />
+  </label>
+  <label>
+    <span>Phone Number</span>
+    <input type="tel" name="phone" placeholder="+33655555555" />
+  </label>
+  <div class="page-form-controls">
+    <input type="hidden" name="token" value="123456" />
     <button type="submit">Submit</button>
+  </div>
 </form>

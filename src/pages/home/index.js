@@ -9,14 +9,11 @@ import 'components/hello-world';
 import 'components/modal-dialog';
 
 export class HomePage extends BasePage {
-    constructor(props) {
-        super(props);
-    }
     componentName() {
         return 'page-home';
     }
-    template(props) {
-        return template.replace(/\[props\.userName\]/g, props.userName || 'World');
+    template() {
+        return template;
     }
     references() {
         return {

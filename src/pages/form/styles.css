@@ -1,0 +1,38 @@
+.page-form {
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+}
+.page-form-form {
+    display: flex;
+    flex-direction: column;
+    margin: 15px auto;
+    max-width: 200px;
+}
+.page-form-form > * {
+    margin-bottom: 10px;
+}
+.page-form-form > label:not(.input-checkbox) {
+    display: flex;
+    flex-direction: column;
+    min-width: 200px;
+}
+
+.page-form-form > label.input-checkbox {
+    display: flex;
+}
+
+.page-form-form > label > span {
+    display: block;
+    min-width: 150px;
+    width: 100%;
+}
+.page-form-controls {
+    text-align: right;
+}
+
+.input-radio-option {
+    display: flex;
+    margin-bottom: 5px;
+}

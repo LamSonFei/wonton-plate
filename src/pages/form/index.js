@@ -1,13 +1,11 @@
 'use strict';
 
+import './styles.css';
 import template from './template.html';
 
 import { BasePage } from 'pages/base';
 
 export class FormPage extends BasePage {
-    constructor(props) {
-        super(props);
-    }
     componentName() {
         return 'page-form';
     }
@@ -22,15 +20,45 @@ export class FormPage extends BasePage {
     listeners() {
         return {
             'form': {
-                'submit': (e) => {
+                'submit': e => {
                     e.preventDefault();
-                    const formData = Array.from(this.getRef('form').querySelectorAll('input')).reduce((data, input) => {
-                        data[input.name] = input.value;
+                    const form = this.getRef('form');
+                    let formData = Array.from(form.querySelectorAll('input')).reduce((data, input) => {
+                        let val;
+                        switch (input.type) {
+                            case 'date':
+                                val = input.valueAsDate;
+                                break;
+                            case 'checkbox':
+                                val = input.checked;
+                                break;
+                            case 'radio':
+                                val = input.checked ? input.value : data[input.name];
+                                break;
+                            default:
+                                val = input.value;
+                        }
+                        data[input.name] = val;
                         return data;
                     }, {});
+                    formData = Array.from(form.querySelectorAll('select')).reduce((data, select) => {
+                        data[select.name] = select.value;
+                        return data;
+                    }, formData);
                     alert(JSON.stringify(formData));
                 }
             }
+        }
+    }
+    connectedCallback() {
+        super.connectedCallback();
+        const nationalitySelect = this.getRef('form').querySelector('[name="nationality"]');
+        if (!nationalitySelect.children.length) {
+            const options = [{ label: 'Singaporean', value: 'SG' }, { label: 'French', value: 'FR' }].reduce((opts, { label, value }) => {
+                opts += `<option value='${value}'><span>${label}</span></option>`;
+                return opts;
+            }, '');
+            nationalitySelect.insertAdjacentHTML('beforeend', options);
         }
     }
 }
