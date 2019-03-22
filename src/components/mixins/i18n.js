@@ -1,4 +1,4 @@
-import log from 'services/log'
+import log from 'services/log';
 import i18n from 'services/i18n';
 
 /**
@@ -9,13 +9,17 @@ import i18n from 'services/i18n';
  * to react on a locale change. The targeted class can also access the i18n service translation method by calling the {@link I18nComponent#i18n} function.
  * @param {Class} clazz the class to bind
  */
-export function I18nComponent(clazz) {
+export function I18nMixin(clazz) {
     return class extends clazz {
         constructor(props) {
             super(props);
-            i18n.supportedLocales.forEach(locale => {
-                i18n.addBundle(this.i18nFilesPath(), locale);
-            });
+            if (typeof this.i18nFilesPath !== 'function') {
+                log.warn(`${this.className}: missing required i18nFilesPath function`)
+            } else {
+                i18n.supportedLocales.forEach(locale => {
+                    i18n.addBundle(this.i18nFilesPath(), locale);
+                });
+            }
         }
 
         /**
@@ -24,7 +28,7 @@ export function I18nComponent(clazz) {
          */
         connectedCallback() {
             super.connectedCallback();
-            log.debug(`Subscribing ${this.componentName()} to i18n service`);
+            log.debug(`Subscribing ${this._componentName} to i18n service`);
             this._subscribeToI18nService();
         }
 
@@ -34,7 +38,7 @@ export function I18nComponent(clazz) {
          */
         disconnectedCallback() {
             super.disconnectedCallback();
-            log.debug(`Unsubscribing ${this.componentName()} from i18n service`);
+            log.debug(`Unsubscribing ${this._componentName} from i18n service`);
             this._unsubscribeToI18nService();
         }
 
@@ -43,7 +47,7 @@ export function I18nComponent(clazz) {
          * This is the function to override on the class using this mixin.
          */
         localeChangedCallback(locale) {
-            log.debug(`Locale change to ${locale} detected by ${this.componentName()}`);
+            log.debug(`Locale change to ${locale} detected by ${this._componentName}`);
         }
 
         /**
@@ -73,4 +77,4 @@ export function I18nComponent(clazz) {
     }
 }
 
-export default I18nComponent;
+export default I18nMixin;

@@ -3,18 +3,19 @@
 import './styles.css';
 
 import Router from 'services/router'
-import { BaseComponent } from 'components/base';
+import { WontonMixin } from 'components/mixins/wonton';
+import { mix } from 'utils/mixins';
 
-export class Link extends BaseComponent {
-    componentName() {
-        return 'cmp-link';
+export class WontonLink extends mix(HTMLElement).with(WontonMixin) {
+    static componentName() {
+        return 'wtn-link';
     }
     template() {
-        return `<a class="cmp-link-button" href="${this.path}">${this.label}</a>`;
+        return `<a class="wtn-link-link" href="${this.path}">${this.label}</a>`;
     }
     references() {
         return {
-            'link': '.cmp-link-button'
+            'link': '.wtn-link-link'
         };
     }
     listeners() {
@@ -34,4 +35,4 @@ export class Link extends BaseComponent {
     }
 }
 
-customElements.define('router-link', Link);
+customElements.define(WontonLink.componentName(), WontonLink);

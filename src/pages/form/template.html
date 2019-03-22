@@ -1,4 +1,4 @@
-<form class="page-form-form">
+<form is="wtn-form" class="page-form-form">
   <label>
     <span>Full Name</span>
     <input type="text" name="name" placeholder="First Name" />
@@ -13,15 +13,15 @@
   </label>
   <label class="input-checkbox">
     <span>Married</span>
-    <input type="checkbox" name="married" />
+    <input type="checkbox" name="family.married" />
   </label>
   <label>
     <span>Number of children</span>
-    <input type="number" name="children" min="0" max="20" />
+    <input type="number" name="family.children" min="0" max="20" value="0" />
   </label>
   <label>
-    <span>Preferred hour</span>
-    <input type="time" name="preferred" />
+    <span>Preferred hour for an appointment</span>
+    <input type="time" name="appointment.preferred" />
   </label>
   <label>
     <span>Gender</span>
@@ -40,11 +40,11 @@
   </label>
   <label>
     <span>Email</span>
-    <input type="email" name="email" placeholder="someone@mail.com" />
+    <input type="email" name="contact.email" placeholder="someone@mail.com" />
   </label>
   <label>
     <span>Phone Number</span>
-    <input type="tel" name="phone" placeholder="+33655555555" />
+    <input type="tel" name="contact.mobile" placeholder="+33655555555" />
   </label>
   <div class="page-form-controls">
     <input type="hidden" name="token" value="123456" />

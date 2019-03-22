@@ -4,17 +4,17 @@ import './styles.css';
 import template from './template.html';
 
 import log from 'services/log';
-import { BaseComponent } from "components/base";
-import { I18nComponent } from 'components/mixins/i18n';
+import { WontonMixin } from 'components/mixins/wonton';
+import { I18nMixin } from 'components/mixins/i18n';
 import { mix } from 'utils/mixins';
 
 
 /**
  * Hello World demo component.
  */
-export class HelloWorld extends mix(BaseComponent).with(I18nComponent) {
-    componentName() {
-        return 'cmp-hello-world';
+export class HelloWorld extends mix(HTMLElement).with(WontonMixin, I18nMixin) {
+    static componentName() {
+        return 'hello-world';
     }
     template() {
         return template;
@@ -78,4 +78,4 @@ export class HelloWorld extends mix(BaseComponent).with(I18nComponent) {
     }
 }
 
-customElements.define('hello-world', HelloWorld);
+customElements.define(HelloWorld.componentName(), HelloWorld);

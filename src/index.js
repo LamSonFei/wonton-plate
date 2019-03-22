@@ -10,8 +10,8 @@ import router from 'services/router';
 import 'pages/home';
 import 'pages/form';
 
-import { LocaleChooser } from 'components/locale-chooser';
-import { Link } from 'components/link'
+import { WontonLocaleChooser } from 'components/locale-chooser';
+import { WontonLink } from 'components/link'
 
 import routes from './routes.json';
 
@@ -28,22 +28,22 @@ router.subscribe(document.querySelector('.page'), routes);
 
 log.debug('Initializing header!');
 const header = document.querySelector('.header');
-const homeLink = document.createElement('router-link');
+const homeLink = document.createElement('wtn-link');
 homeLink.setAttribute('path', '/home');
 homeLink.setAttribute('label', 'Home');
 header.append(homeLink);
-const homeJohnLink = new Link();
+const homeJohnLink = new WontonLink();
 homeJohnLink.path = '/home/John';
 homeJohnLink.label = 'John\'s space';
 header.append(homeJohnLink);
-const formLink = new Link();
+const formLink = new WontonLink();
 formLink.label = 'Form';
 formLink.path = '/form';
 header.append(formLink);
-header.append(new LocaleChooser());
+header.append(new WontonLocaleChooser());
 
 log.debug('Initializing footer!');
-document.querySelector('.footer').append(new LocaleChooser());
+document.querySelector('.footer').append(new WontonLocaleChooser());
 
 log.info('Application ready!');
 

@@ -1,14 +1,17 @@
 'use strict';
 
-import { BaseComponent } from "components/base";
 import { BehaviorSubject } from "rxjs";
 import get from "lodash/get";
 import merge from "lodash/merge";
 
+import WontonMixin from "components/mixins/wonton";
+import { mix } from 'utils/mixins';
+import log from 'services/log';
+
 /**
  * Internationalization service component.
  */
-export class I18nService extends BaseComponent {
+export class I18nService extends mix(HTMLElement).with(WontonMixin) {
     // Init
     constructor() {
         super();
@@ -22,7 +25,7 @@ export class I18nService extends BaseComponent {
         this._updateBroadcaster = new BehaviorSubject();
         this._updateBroadcaster.next('en');
     }
-    componentName() {
+    static componentName() {
         return 'i18n-service';
     }
     // Properties
@@ -37,6 +40,7 @@ export class I18nService extends BaseComponent {
     }
     set locale(locale) {
         this.setAttribute('locale', locale);
+        document.body.setAttribute('lang', locale);
         this._updateBroadcaster.next(locale);
     }
     get bundleMap() {
@@ -62,7 +66,7 @@ export class I18nService extends BaseComponent {
         
         return import(`../../${bundle}/${locale}.json`).then(json => {
             this._bundleMap[locale] = merge(this._bundleMap[locale] || {}, json);
-            console.log(`Added i18n bundle at ${bundle} for locale ${locale}`);
+            log.debug(`Added i18n bundle at ${bundle} for locale ${locale}`);
             this._pending[locale]--;
             if (this.locale === locale && this._pending[locale] === 0) {
                 this._updateBroadcaster.next(locale);

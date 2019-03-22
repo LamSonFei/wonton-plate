@@ -40,7 +40,7 @@
     align-items: flex-end;
 }
 
-modal-dialog {
+wtn-modal-dialog {
     --modal-dialog-ok-bg-color: #bada55;
     --modal-dialog-cancel-bg-color: #b00b1e;
 }

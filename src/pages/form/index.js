@@ -3,10 +3,11 @@
 import './styles.css';
 import template from './template.html';
 
+import 'components/form';
 import { BasePage } from 'pages/base';
 
 export class FormPage extends BasePage {
-    componentName() {
+    static componentName() {
         return 'page-form';
     }
     template() {
@@ -23,29 +24,7 @@ export class FormPage extends BasePage {
                 'submit': e => {
                     e.preventDefault();
                     const form = this.getRef('form');
-                    let formData = Array.from(form.querySelectorAll('input')).reduce((data, input) => {
-                        let val;
-                        switch (input.type) {
-                            case 'date':
-                                val = input.valueAsDate;
-                                break;
-                            case 'checkbox':
-                                val = input.checked;
-                                break;
-                            case 'radio':
-                                val = input.checked ? input.value : data[input.name];
-                                break;
-                            default:
-                                val = input.value;
-                        }
-                        data[input.name] = val;
-                        return data;
-                    }, {});
-                    formData = Array.from(form.querySelectorAll('select')).reduce((data, select) => {
-                        data[select.name] = select.value;
-                        return data;
-                    }, formData);
-                    alert(JSON.stringify(formData));
+                    alert(JSON.stringify(form.getJsonData()));
                 }
             }
         }

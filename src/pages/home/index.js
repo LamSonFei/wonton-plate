@@ -9,7 +9,7 @@ import 'components/hello-world';
 import 'components/modal-dialog';
 
 export class HomePage extends BasePage {
-    componentName() {
+    static componentName() {
         return 'page-home';
     }
     template() {

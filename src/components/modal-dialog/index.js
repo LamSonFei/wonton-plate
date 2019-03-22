@@ -2,19 +2,19 @@
 
 import tpl from './template.html'
 import css from '!!raw-loader!./styles.css';
-import { BaseComponent } from '../base';
-import { I18nComponent } from 'components/mixins/i18n';
+import { WontonMixin } from 'components/mixins/wonton';
+import { I18nMixin } from 'components/mixins/i18n';
 import { mix } from 'utils/mixins';
 
 /**
  * Modal dialog web component. It content can be customized using slots.
  */
-export default class ModalDialog extends mix(BaseComponent).with(I18nComponent) {
+export default class WontonModalDialog extends mix(HTMLElement).with(WontonMixin, I18nMixin) {
     useShadowDOM() {
         return true;
     }
-    componentName() {
-        return 'cmp-modal-dialog';
+    static componentName() {
+        return 'wtn-modal-dialog';
     }
     template() {
         return `
@@ -76,4 +76,4 @@ export default class ModalDialog extends mix(BaseComponent).with(I18nComponent) 
         this.dispatchEvent(new Event('ok'));
     }
 }
-customElements.define('modal-dialog', ModalDialog);
+customElements.define(WontonModalDialog.componentName(), WontonModalDialog);

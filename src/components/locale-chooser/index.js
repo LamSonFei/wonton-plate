@@ -2,15 +2,15 @@
 
 import './styles.css';
 
-import { BaseComponent } from "../base/index.js";
 import i18n from './../../services/i18n/index.js';
-import { I18nComponent } from 'components/mixins/i18n';
+import { WontonMixin } from 'components/mixins/wonton';
+import { I18nMixin } from 'components/mixins/i18n';
 import { mix } from 'utils/mixins';
 
 /**
  * Locale chooser demo component.
  */
-export class LocaleChooser extends mix(BaseComponent).with(I18nComponent) {
+export class WontonLocaleChooser extends mix(HTMLElement).with(WontonMixin, I18nMixin) {
     // Init
     constructor(props = {}) {
         // Extending props for the template
@@ -19,8 +19,8 @@ export class LocaleChooser extends mix(BaseComponent).with(I18nComponent) {
         Object.assign(props, { localeOptions });
         super(props);
     }
-    componentName() {
-        return 'cmp-locale-chooser';
+    static componentName() {
+        return 'wtn-locale-chooser';
     }
     template(props) {
         return `
@@ -56,4 +56,4 @@ export class LocaleChooser extends mix(BaseComponent).with(I18nComponent) {
     }
 }
 
-customElements.define('locale-chooser', LocaleChooser);
+customElements.define(WontonLocaleChooser.componentName(), WontonLocaleChooser);
