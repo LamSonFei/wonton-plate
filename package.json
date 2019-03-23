@@ -6,7 +6,7 @@
   "license": "ISC",
   "sideEffects": true,
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "webpack --config webpack.test.js && mocha ./test-dist/main.js",
     "watch": "webpack --watch",
     "dev-server": "webpack --config webpack.dev.js && webpack-dev-server --open --config webpack.dev.js",
     "start": "node index.js",
@@ -27,10 +27,13 @@
     "rxjs": "^6.3.3"
   },
   "devDependencies": {
+    "chai": "^4.2.0",
     "clean-webpack-plugin": "^1.0.0",
     "css-loader": "^1.0.1",
     "file-loader": "^2.0.0",
     "html-webpack-plugin": "^3.2.0",
+    "jsdom": "^14.0.0",
+    "mocha": "^6.0.2",
     "raw-loader": "^0.5.1",
     "style-loader": "^0.23.1",
     "webpack": "^4.26.0",
@@ -38,6 +41,7 @@
     "webpack-cli": "^3.1.2",
     "webpack-dev-server": "^3.2.1",
     "webpack-merge": "^4.1.4",
+    "webpack-node-externals": "^1.7.2",
     "workbox-webpack-plugin": "^3.6.3"
   }
 }

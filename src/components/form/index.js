@@ -12,6 +12,31 @@ export class WontonForm extends mix(HTMLFormElement).with(WontonMixin) {
     return "wtn-form";
   }
   /**
+   * Maps data from an object to the form fields.
+   * Each property of the JSON object is mapped based on the name of the input.
+   */
+  setJsonData(data) {
+    let formData = Array.from(this.querySelectorAll("input")).forEach(
+      input => {
+        let val = get(data, input.name);
+        switch (input.type) {
+          case "date":
+            input.valueAsDate = val;
+            break;
+          case "checkbox":
+            input.checked = !!val;
+            break;
+          case "radio":
+            input.checked = val === input.value;
+            break;
+          default:
+            input.value = val;
+        }
+      },
+      {}
+    );
+  }
+  /**
    * Gets the contained data as a JSON object.
    * Each property of the JSON object is mapped based on the name of the input.
    */
