@@ -26,6 +26,9 @@ jobs:
 
       # run build
       - run: npm run build
+
+      # run tests
+      - run: npm run test
       
       # store artifact
       - store_artifacts:
