@@ -21,7 +21,9 @@ log.info('Initializing...');
 
 log.debug('Adding services components!');
 const services = document.querySelector('.services');
+services.append(log);
 services.append(i18n);
+services.append(router);
 
 log.debug('Initializing routes!');
 router.subscribe(document.querySelector('.page'), routes);

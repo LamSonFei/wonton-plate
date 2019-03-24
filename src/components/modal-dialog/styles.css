@@ -25,7 +25,8 @@
 .modal-dialog-window {
   flex-grow: 0;
   width: auto;
-  background: white;
+  background: #000;
+  border: 1px solid #fff;
   z-index: 100;
   opacity: 0;
   pointer-events: none;

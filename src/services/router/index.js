@@ -1,6 +1,6 @@
 import RoutePath from "./routePath";
 
-class RouterService {
+class RouterService extends HTMLElement {
     static get instance() {
         if (!RouterService._instance) {
             RouterService._instance = new RouterService();
@@ -94,5 +94,7 @@ class RouterService {
     }
 
 }
+
+customElements.define('router-service', RouterService);
 
 export default RouterService.instance;

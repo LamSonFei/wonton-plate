@@ -4,14 +4,12 @@ import { BehaviorSubject } from "rxjs";
 import get from "lodash/get";
 import merge from "lodash/merge";
 
-import WontonMixin from "components/mixins/wonton";
-import { mix } from 'utils/mixins';
 import log from 'services/log';
 
 /**
  * Internationalization service component.
  */
-export class I18nService extends mix(HTMLElement).with(WontonMixin) {
+class I18nService extends HTMLElement {
     // Init
     constructor() {
         super();
@@ -98,7 +96,6 @@ export class I18nService extends mix(HTMLElement).with(WontonMixin) {
         return ['locale'];
     }
     attributeChangedCallback(name, oldValue, newValue) {
-        super.attributeChangedCallback(name, oldValue, newValue);
         if (oldValue === newValue) return;
         if (name === 'locale') {
             this._updateBroadcaster.next(this.locale);
