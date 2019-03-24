@@ -5,10 +5,12 @@ import template from './template.html';
 
 import 'components/form';
 import { BasePage } from 'pages/base';
+import LocalStorageStore from 'stores/localstorage-store';
 
 export class FormPage extends BasePage {
     constructor() {
         super();
+        // Init options
         const nationalitySelect = this.getRef('form').querySelector('[name="nationality"]');
         if (!nationalitySelect.children.length) {
             const options = [{ label: 'Singaporean', value: 'SG' }, { label: 'French', value: 'FR' }].reduce((opts, { label, value }) => {
@@ -38,10 +40,18 @@ export class FormPage extends BasePage {
                 'submit': e => {
                     e.preventDefault();
                     const form = this.getRef('form');
-                    alert(JSON.stringify(form.getJsonData()));
+                    const jsonData = form.getJsonData();
+                    this._store.setData(jsonData);
+                    alert(JSON.stringify(jsonData));
                 }
             }
         }
+    }
+    connectedCallback() {
+        super.connectedCallback();
+        // Init data
+        this._store = LocalStorageStore.get('example-form');
+        this.getRef('form').setJsonData(this._store.getData());
     }
 }
 

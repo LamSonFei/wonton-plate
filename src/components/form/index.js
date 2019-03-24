@@ -16,13 +16,10 @@ export class WontonForm extends mix(HTMLFormElement).with(WontonMixin) {
    * Each property of the JSON object is mapped based on the name of the input.
    */
   setJsonData(data) {
-    let formData = Array.from(this.querySelectorAll("input")).forEach(
+    Array.from(this.querySelectorAll("input")).forEach(
       input => {
-        let val = get(data, input.name);
+        let val = get(data, input.name) || '';
         switch (input.type) {
-          case "date":
-            input.valueAsDate = val;
-            break;
           case "checkbox":
             input.checked = !!val;
             break;
@@ -32,8 +29,13 @@ export class WontonForm extends mix(HTMLFormElement).with(WontonMixin) {
           default:
             input.value = val;
         }
-      },
-      {}
+      }
+    );
+    Array.from(this.querySelectorAll("select")).forEach(
+      input => {
+        let val = get(data, input.name) || '';
+        input.value = val;
+      }
     );
   }
   /**
@@ -45,9 +47,6 @@ export class WontonForm extends mix(HTMLFormElement).with(WontonMixin) {
       (data, input) => {
         let val;
         switch (input.type) {
-          case "date":
-            val = input.valueAsDate;
-            break;
           case "checkbox":
             val = input.checked;
             break;
