@@ -1,0 +1,10 @@
+{
+  "nav-bar": {
+    "links": {
+      "home": "Accueil",
+      "hello-john": "Bonjour John",
+      "form": "Formulaire",
+      "movies": "Films"
+    }
+  }
+}

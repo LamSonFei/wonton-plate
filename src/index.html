@@ -5,12 +5,6 @@
   <meta charset="utf-8" />
   <meta name="Description" content="This application is an example on how to get started to build an application only with Web Components and libraries.">
   <title>Wonton Plate</title>
-  <script type="text/javascript" src="https://unpkg.com/@webcomponents/webcomponentsjs@2.2.0/webcomponents-loader.js"></script>
-  <script type="module">
-    WebComponents.waitFor(() => {
-      return Promise.resolve();
-    });
-  </script>
 </head>
 
 <body>
@@ -28,6 +22,13 @@
     </div>
     <div style="display:none" class="services"></div>
   </div>
+
+  <script type="text/javascript">
+    if (!window.customElements) {
+      document.body.removeChild(document.body.lastChild);
+      document.body.innerText = "Please use a recent browser supporting Web Components (Chrome, Firefox, Opera...)."
+    }
+  </script>
 </body>
 
 </html>

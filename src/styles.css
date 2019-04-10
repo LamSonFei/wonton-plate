@@ -35,10 +35,6 @@
 .footer {
     max-height: 30px;
 }
-.header {
-    align-items: flex-start;
-    justify-content: space-between;
-}
 .footer {
     align-items: flex-end;
 }

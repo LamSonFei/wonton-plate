@@ -33,6 +33,14 @@ export class WontonLink extends mix(HTMLElement).with(WontonMixin) {
     propertiesAttributes() {
         return ['label', 'path'];
     }
+    // Observed attributes
+    static get observedAttributes() {
+        return ['label'];
+    }
+    attributeChangedCallback(name, oldValue, newValue) {
+        super.attributeChangedCallback(name, oldValue, newValue);
+        this.getRef('link').innerText = newValue;
+    }
 }
 
 customElements.define(WontonLink.componentName(), WontonLink);

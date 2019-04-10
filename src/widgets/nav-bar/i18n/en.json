@@ -1,0 +1,10 @@
+{
+  "nav-bar": {
+    "links": {
+      "home": "Home",
+      "hello-john": "Hello John",
+      "form": "Form",
+      "movies": "Movies"
+    }
+  }
+}
