@@ -15,5 +15,11 @@
             "/form"
         ],
         "component": "page-form"
+    },
+    {
+        "paths": [
+            "/movies"
+        ],
+        "component": "page-movies"
     }
 ]

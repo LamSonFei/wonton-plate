@@ -1,0 +1,9 @@
+{
+    "page": {
+        "home": {
+            "world": "tout le monde",
+            "hello": "Bonjour ${name}!",
+            "greet": "Comment allez-vous aujourd'hui, ${name}?"
+        }
+    }
+}
