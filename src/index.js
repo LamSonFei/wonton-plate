@@ -14,7 +14,6 @@ log.info('Initializing...');
 
 log.debug('Initializing Firestore connection!');
 import firebase from 'firebase/app';
-import SimpleStore from 'stores/simple-store';
 firebase.initializeApp({
     apiKey: "AIzaSyAVWXMeWwmfhesDjpi6qp-1_u0tjJkzRO8",
     authDomain: "wonton-movies.firebaseapp.com",
@@ -23,6 +22,9 @@ firebase.initializeApp({
     storageBucket: "wonton-movies.appspot.com",
     messagingSenderId: "880408029705"
 });
+log.debug('Authenticating Firestore user!');
+import 'firebase/auth';
+import SimpleStore from 'stores/simple-store';
 firebase.auth().signInAnonymously();
 firebase.auth().onAuthStateChanged(user => {
     if (!user) return;
