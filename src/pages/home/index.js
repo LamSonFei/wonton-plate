@@ -32,7 +32,7 @@ export class HomePage extends mix(BasePage).with(I18nMixin) {
                 'hello': e => {
                     this.name = e.detail.name;
                     this.refreshModalLabels();
-                    this.getRef('modalDialog').open();
+                    this.getRef('modalDialog').show();
                 }
             }
         }

@@ -26,7 +26,7 @@ export class MoviesPage extends BasePage {
     connectedCallback() {
         super.connectedCallback();
         // Init data
-        SimpleStore.get('user').subscribe(user => {
+        firebase.auth().onAuthStateChanged(user => {
             if (!user.uid || SimpleStore.get('movies').getData('movies')) return;
             this._db = firebase.firestore();
             // Retrieve data

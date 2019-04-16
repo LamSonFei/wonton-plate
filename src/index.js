@@ -24,11 +24,10 @@ firebase.initializeApp({
 });
 log.debug('Authenticating Firestore user!');
 import 'firebase/auth';
-import SimpleStore from 'stores/simple-store';
-firebase.auth().signInAnonymously();
-firebase.auth().onAuthStateChanged(user => {
-    if (!user) return;
-    SimpleStore.get('user').setData(user);
+firebase.auth().onAuthStateChanged(() => {
+    if (!firebase.auth().currentUser) {
+        firebase.auth().signInAnonymously();
+    }
 });
 
 log.debug('Adding services components!');
@@ -47,6 +46,8 @@ router.subscribe(document.querySelector('.page'), routes);
 log.debug('Initializing header!');
 import { NavBar } from 'widgets/nav-bar';
 document.querySelector('.header').append(new NavBar());
+import FirestoreUserControl from 'widgets/firestore-user-control';
+document.querySelector('.header').append(new FirestoreUserControl());
 
 log.debug('Initializing footer!');
 import { WontonLocaleChooser } from 'components/locale-chooser';

@@ -17,7 +17,7 @@
   </noscript>
   
   <!-- page content -->
-  <div class="app">
+  <div id="app" class="app">
     <div class="main">
       <div class="header"></div>
       <div class="page"></div>
@@ -28,7 +28,7 @@
 
   <script type="text/javascript">
     if (!window.customElements) {
-      document.body.removeChild(document.body.lastChild);
+      document.body.removeChild(document.getElementById("app"));
       document.body.innerText = "Please use a recent browser supporting Web Components (Chrome, Firefox, Opera...)."
     }
   </script>

@@ -25,6 +25,7 @@
     "express": "^4.16.4",
     "express-history-api-fallback": "^2.2.1",
     "firebase": "^5.9.3",
+    "firebaseui": "^3.5.2",
     "lodash": "^4.17.11",
     "rxjs": "^6.3.3"
   },

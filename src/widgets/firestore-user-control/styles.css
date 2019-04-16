@@ -1,0 +1,11 @@
+.wtn-firestore-user-control {
+  display: flex;
+  height: 20px;
+}
+.wtn-firestore-user-control-user {
+  margin-right: 10px;
+}
+.wtn-firestore-user-control-login {
+  cursor: pointer;
+  padding: 1px 10px;
+}
