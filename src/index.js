@@ -14,7 +14,6 @@ log.info('Initializing...');
 
 log.debug('Initializing Firestore connection!');
 import firebase from 'firebase/app';
-import SimpleStore from 'stores/simple-store';
 firebase.initializeApp({
     apiKey: "AIzaSyAVWXMeWwmfhesDjpi6qp-1_u0tjJkzRO8",
     authDomain: "wonton-movies.firebaseapp.com",
@@ -23,10 +22,12 @@ firebase.initializeApp({
     storageBucket: "wonton-movies.appspot.com",
     messagingSenderId: "880408029705"
 });
-firebase.auth().signInAnonymously();
-firebase.auth().onAuthStateChanged(user => {
-    if (!user) return;
-    SimpleStore.get('user').setData(user);
+log.debug('Authenticating Firestore user!');
+import 'firebase/auth';
+firebase.auth().onAuthStateChanged(() => {
+    if (!firebase.auth().currentUser) {
+        firebase.auth().signInAnonymously();
+    }
 });
 
 log.debug('Adding services components!');
@@ -45,6 +46,8 @@ router.subscribe(document.querySelector('.page'), routes);
 log.debug('Initializing header!');
 import { NavBar } from 'widgets/nav-bar';
 document.querySelector('.header').append(new NavBar());
+import FirestoreUserControl from 'widgets/firestore-user-control';
+document.querySelector('.header').append(new FirestoreUserControl());
 
 log.debug('Initializing footer!');
 import { WontonLocaleChooser } from 'components/locale-chooser';

@@ -42,7 +42,7 @@ export default class WontonModalDialog extends mix(HTMLElement).with(WontonMixin
         this.getRef('cancelBtn').innerText = this.i18n('modal-dialog.cancel');
     }
 
-    open() {
+    show() {
       // Trigger animation / transition
       if (this.hasAttribute('closing')) this.removeAttribute('closing');
       setTimeout(() => {
@@ -74,6 +74,33 @@ export default class WontonModalDialog extends mix(HTMLElement).with(WontonMixin
     _ok() {
         this.hide();
         this.dispatchEvent(new Event('ok'));
+    }
+
+    // Properties attributes
+    propertiesAttributes() {
+        return ['hideok', 'hidecancel'];
+    }
+    // Observed attributes
+    static get observedAttributes() {
+        return ['hideok', 'hidecancel'];
+    }
+    attributeChangedCallback(name, oldValue, newValue) {
+        super.attributeChangedCallback(name, oldValue, newValue);
+        if (!this.isRendered || oldValue === newValue) return;
+        switch (name) {
+            case 'hideok':
+                this.getRef('okBtn').style.display = newValue === 'true' ? 'none' : 'inline';
+                break;
+            case 'hidecancel':
+                this.getRef('cancelBtn').style.display = newValue === 'true' ? 'none' : 'inline';
+                break;
+            default:
+        }
+    }
+    connectedCallback() {
+        super.connectedCallback();
+        this.getRef('okBtn').style.display = this.hideok === 'true' ? 'none' : 'inline-block';
+        this.getRef('cancelBtn').style.display = this.hidecancel === 'true' ? 'none' : 'inline-block';
     }
 }
 customElements.define(WontonModalDialog.componentName(), WontonModalDialog);

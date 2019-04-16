@@ -1,14 +1,15 @@
 'use strict';
 
-import 'styles.css';
+import './styles.css';
 import template from './template.html';
 
 import { BasePage } from 'pages/base';
 import SimpleStore from 'stores/simple-store';
 
+import 'components/movie-card';
+
 import firebase from 'firebase/app';
 import 'firebase/firestore';
-import 'firebase/auth';
 
 export class MoviesPage extends BasePage {
     static componentName() {
@@ -25,7 +26,7 @@ export class MoviesPage extends BasePage {
     connectedCallback() {
         super.connectedCallback();
         // Init data
-        SimpleStore.get('user').subscribe(user => {
+        firebase.auth().onAuthStateChanged(user => {
             if (!user.uid || SimpleStore.get('movies').getData('movies')) return;
             this._db = firebase.firestore();
             // Retrieve data
@@ -40,7 +41,17 @@ export class MoviesPage extends BasePage {
                 });
         });
         this._moviesSubscription = SimpleStore.get('movies').subscribe(data => {
-            this.getRef('movieCards').innerHTML = (data.movies || []).map(m => m.name).join(', ');
+            const fragment = document.createDocumentFragment();
+            (data.movies || []).forEach(movie => {
+                const movieCard = document.createElement('wtn-movie-card');
+                movieCard.movie = movie;
+                fragment.appendChild(movieCard);
+            });
+            const movieCards = this.getRef('movieCards');
+            while (movieCards.lastElementChild) {
+                movieCards.removeChild(movieCards.lastElementChild);
+            }
+            movieCards.appendChild(fragment);
         });
     }
     disconnectedCallback() {

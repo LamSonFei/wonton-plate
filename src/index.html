@@ -5,6 +5,9 @@
   <meta charset="utf-8" />
   <meta name="Description" content="This application is an example on how to get started to build an application only with Web Components and libraries.">
   <title>Wonton Plate</title>
+
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/regular.css" integrity="sha384-FKw7x8fCxuvzBwOJmhTJJsKzBl8dnN9e2R4+pXRfYoHivikuHkzWyhKWDSMcGNK8" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/fontawesome.css" integrity="sha384-vd1e11sR28tEK9YANUtpIOdjGW14pS87bUBuOIoBILVWLFnS+MCX9T6MMf0VdPGq" crossorigin="anonymous">
 </head>
 
 <body>
@@ -14,7 +17,7 @@
   </noscript>
   
   <!-- page content -->
-  <div class="app">
+  <div id="app" class="app">
     <div class="main">
       <div class="header"></div>
       <div class="page"></div>
@@ -25,7 +28,7 @@
 
   <script type="text/javascript">
     if (!window.customElements) {
-      document.body.removeChild(document.body.lastChild);
+      document.body.removeChild(document.getElementById("app"));
       document.body.innerText = "Please use a recent browser supporting Web Components (Chrome, Firefox, Opera...)."
     }
   </script>

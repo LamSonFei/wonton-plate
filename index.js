@@ -2,8 +2,11 @@ const express = require('express');
 const fallback = require('express-history-api-fallback');
 const app = express();
 const path = require('path');
+var compression = require('compression')
 
 const port = process.env.PORT || 3000;
+
+app.use(compression());
 
 app.use('/', express.static(path.join(__dirname, 'dist')));
 app.use(fallback(path.join(__dirname, '/dist/index.html')));

@@ -1,0 +1,34 @@
+.wtn-movie-card {
+  display: inline-grid;
+  grid-template-rows: min-content 1fr;
+  border: solid 1px white;
+  padding: 10px;
+  width: 300px;
+}
+
+.wtn-movie-card-name {
+  margin: 0px 0px 5px;
+}
+.wtn-movie-card-release {
+  font-size: 12px;
+  font-style: italic;
+}
+
+.wtn-movie-card-details {
+  margin: 8px 0px;
+}
+.wtn-movie-card-details > h3 {
+  margin: 8px 0px;
+}
+.wtn-movie-card-details > ul {
+  margin: 0px;
+}
+
+.wtn-movie-card-footer {
+  border-top: solid 1px #fff;
+  padding-top: 8px;
+  text-align: right;
+}
+.wtn-movie-card-footer > button {
+  cursor: pointer;
+}
