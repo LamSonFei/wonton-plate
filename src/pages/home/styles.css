@@ -2,6 +2,7 @@
     display: flex;
     margin: auto;
     align-items: center;
+    justify-content: center;
     min-height:  150px;
 }
 .page-home:after {
