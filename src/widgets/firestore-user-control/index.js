@@ -65,16 +65,19 @@ export class FirestoreUserControl extends mix(HTMLElement).with(WontonMixin) {
             }
         }
     }
-    handleAuthResult() {
+    handleAuthResult(authResult) {
+        firebase.auth().currentUser.updateProfile({
+            displayName: authResult.user.displayName
+        });
         this.getRef('loginDialog').hide();
         return false;
     }
     connectedCallback() {
         super.connectedCallback();
-        firebase.auth().onAuthStateChanged(user => {
-            this._user = user;
+        firebase.auth().onAuthStateChanged(() => {
+            this._user = firebase.auth().currentUser;
             if (this._user && !this._user.isAnonymous) {
-                this.getRef('userDisplay').textContent = this._user.displayName;
+                this.getRef('userDisplay').textContent = this._user.displayName || this._user.email;
                 this.getRef('loginBtn').style.display = 'none';
                 this.getRef('logoutBtn').style.display = 'inline-block';
             } else {

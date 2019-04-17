@@ -1,5 +1,6 @@
 .wtn-firestore-user-control {
   display: flex;
+  justify-content: flex-end;
   height: 20px;
 }
 .wtn-firestore-user-control-user {

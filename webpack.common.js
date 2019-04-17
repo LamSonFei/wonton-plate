@@ -10,6 +10,11 @@ module.exports = {
         filename: '[name].bundle.[hash].js',
         publicPath: '/'
     },
+    optimization: {
+        splitChunks: {
+            chunks: 'all'
+        }
+    },
     plugins: [
         new HtmlWebpackPlugin({
             template: './src/index.html',
