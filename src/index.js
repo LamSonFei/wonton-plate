@@ -24,8 +24,26 @@ firebase.initializeApp({
 });
 log.debug('Authenticating Firestore user!');
 import 'firebase/auth';
+import 'firebase/firestore';
+import SimpleStore from 'stores/simple-store.js';
 firebase.auth().onAuthStateChanged(() => {
-    if (!firebase.auth().currentUser) {
+    const user = firebase.auth().currentUser;
+    if (user && !user.isAnonymous) {
+        firebase.firestore().collection("users-ratings")
+            .where('user', '==', user.uid)
+            .get()
+            .then(querySnapshot => {
+                const ratings = {};
+                querySnapshot.forEach(s => {
+                    const data = s.data();
+                    ratings[data.movie] = data.rating;
+                });
+                user.ratings = ratings;
+                SimpleStore.get('user').setData(ratings, 'ratings');
+            });
+    }
+    SimpleStore.get('user').setData(user || {});
+    if (!user) {
         firebase.auth().signInAnonymously();
     }
 });
@@ -46,8 +64,6 @@ router.subscribe(document.querySelector('.page'), routes);
 log.debug('Initializing header!');
 import { NavBar } from 'widgets/nav-bar';
 document.querySelector('.header').append(new NavBar());
-import FirestoreUserControl from 'widgets/firestore-user-control';
-document.querySelector('.header').append(new FirestoreUserControl());
 
 log.debug('Initializing footer!');
 import { WontonLocaleChooser } from 'components/locale-chooser';

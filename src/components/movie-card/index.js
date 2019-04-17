@@ -27,7 +27,9 @@ export class MovieCard extends mix(HTMLElement).with(WontonMixin) {
             'producers': '.wtn-movie-card-producers',
             'cast': '.wtn-movie-card-cast',
             'likes': '.wtn-movie-card-likes',
-            'dislikes': '.wtn-movie-card-dislikes'
+            'dislikes': '.wtn-movie-card-dislikes',
+            'likesBtn': '.wtn-movie-card-likes-button',
+            'dislikesBtn': '.wtn-movie-card-dislikes-button'
         };
     }
     // Methods
@@ -57,11 +59,29 @@ export class MovieCard extends mix(HTMLElement).with(WontonMixin) {
         if (releaseDate) {
             this.getRef('release').textContent = releaseDate.toLocaleDateString('en-SG');
         }
+        if (this.liked === 'true') {
+            this.getRef('likesBtn').setAttribute('disabled', '');
+            this.getRef('dislikesBtn').removeAttribute('disabled');
+            this.getRef('dislikesBtn').style.display = 'none';
+        }
+        if (this.disliked === 'true') {
+            this.getRef('dislikesBtn').setAttribute('disabled', '');
+            this.getRef('likesBtn').removeAttribute('disabled');
+            this.getRef('likesBtn').style.display = 'none';
+        }
         this.getRef('likes').textContent = this._movie.likes || 0;
         this.getRef('dislikes').textContent = this._movie.dislikes || 0;
     }
     connectedCallback() {
         super.connectedCallback();
+        this.refreshDisplay();
+    }
+    propertiesAttributes() {
+        return ['liked', 'disliked'];
+    }
+    attributeChangedCallback(name, oldValue, newValue) {
+        super.attributeChangedCallback(name, oldValue, newValue);
+        if (!this.isRendered || oldValue === newValue) return;
         this.refreshDisplay();
     }
 }

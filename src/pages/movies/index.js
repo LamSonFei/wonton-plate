@@ -7,8 +7,10 @@ import { BasePage } from 'pages/base';
 import SimpleStore from 'stores/simple-store';
 
 import 'components/movie-card';
+import 'widgets/firestore-user-control';
 
 import firebase from 'firebase/app';
+import 'firebase/auth';
 import 'firebase/firestore';
 
 export class MoviesPage extends BasePage {
@@ -26,7 +28,7 @@ export class MoviesPage extends BasePage {
     connectedCallback() {
         super.connectedCallback();
         // Init data
-        firebase.auth().onAuthStateChanged(user => {
+        SimpleStore.get('user').subscribe(user => {
             if (!user.uid || SimpleStore.get('movies').getData('movies')) return;
             this._db = firebase.firestore();
             // Retrieve data
@@ -36,15 +38,23 @@ export class MoviesPage extends BasePage {
                 .get()
                 .then(querySnapshot => {
                     const movies = [];
-                    querySnapshot.forEach(s => movies.push(s.data()))
+                    querySnapshot.forEach(s => movies.push({
+                        uid: s.id,
+                        ...s.data()
+                    }))
                     SimpleStore.get('movies').setData({ movies });
                 });
         });
         this._moviesSubscription = SimpleStore.get('movies').subscribe(data => {
+            const ratings = SimpleStore.get('user').getData().ratings;
             const fragment = document.createDocumentFragment();
             (data.movies || []).forEach(movie => {
                 const movieCard = document.createElement('wtn-movie-card');
                 movieCard.movie = movie;
+                if (ratings) {
+                    movieCard.liked = ratings[movie.uid] > 0;
+                    movieCard.disliked = ratings[movie.uid] < 0;
+                }
                 fragment.appendChild(movieCard);
             });
             const movieCards = this.getRef('movieCards');
