@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "description": "Template for web applications using web components",
   "author": "Adrien Nortain",
-  "license": "ISC",
+  "license": "MIT License",
   "sideEffects": true,
   "scripts": {
     "test": "webpack --config webpack.test.js && mocha ./test-dist/main.js",
