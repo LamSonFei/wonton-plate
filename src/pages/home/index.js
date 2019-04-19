@@ -23,7 +23,8 @@ export class HomePage extends mix(BasePage).with(I18nMixin) {
             'helloWorldComponent': '.my-hello-world-component',
             'modalDialog': '.my-modal-dialog',
             'modalDialogTitle': '.hello-modal-title',
-            'modalDialogBody': '.hello-modal-body'
+            'modalDialogBody': '.hello-modal-body',
+            'message': '.welcome-message'
         }
     }
     listeners() {
@@ -45,6 +46,7 @@ export class HomePage extends mix(BasePage).with(I18nMixin) {
         const name =  this.name || this.i18n('page.home.world');
         this.getRef('modalDialogTitle').innerText = this.i18n('page.home.hello', { name });
         this.getRef('modalDialogBody').innerText = this.i18n('page.home.greet', { name });
+        this.getRef('message').innerHTML = this.i18n('page.home.message_html');
     }
     // i18n
     i18nFilesPath() {

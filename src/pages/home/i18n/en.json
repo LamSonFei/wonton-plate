@@ -3,7 +3,8 @@
         "home": {
             "world": "World",
             "hello": "Hello ${name}!",
-            "greet": "How are you today, ${name}?"
+            "greet": "How are you today, ${name}?",
+            "message_html": "Welcome!<br/>Please spend some time looking at our basic Hello World or Form examples.<br/>Or you can just dive in our HK Movies fav' collection! Enjoy!"
         }
     }
 }

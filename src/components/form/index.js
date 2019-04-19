@@ -3,6 +3,8 @@ import get from "lodash/get";
 import { WontonMixin } from 'components/mixins/wonton';
 import { mix } from 'utils/mixins';
 
+import './styles.css';
+
 /**
  * Custom form that handles JSON mapping and inputs value extractions.
  * Extends a native HTML form element.
