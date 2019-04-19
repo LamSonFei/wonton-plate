@@ -1,6 +1,7 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const WorkboxPlugin = require('workbox-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
     entry: {
@@ -22,6 +23,9 @@ module.exports = {
                 viewport: 'width=device-width, initial-scale=1, shrink-to-fit=no'
             }
         }),
+        new CopyWebpackPlugin([
+            { from: 'src/assets', to: 'assets' }
+        ]),
         new WorkboxPlugin.GenerateSW({
             clientsClaim: true,
             skipWaiting: true

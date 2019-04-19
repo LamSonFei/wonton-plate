@@ -8,13 +8,12 @@
   z-index: 10;
   opacity: 0;
   pointer-events: none;
+  overflow: auto;
 }
 
 .modal-dialog-anchor {
   position: absolute;
   display: flex;
-  flex-direction: column;
-  justify-content: center;
   align-items: center;
   top: 0;
   bottom: 0;
@@ -24,7 +23,9 @@
 
 .modal-dialog-window {
   flex-grow: 0;
+  margin: auto;
   width: auto;
+  min-height: min-content;
   background: #000;
   border: 1px solid #fff;
   z-index: 100;
@@ -44,22 +45,22 @@
 }
 
 .modal-dialog-btn-cancel {
-  background-color: var(--modal-dialog-cancel-bg-color, orange);
+  background-color: var(--modal-dialog-cancel-bg-color, rgb(209, 143, 0));
   color: #fff;
   cursor: pointer;
 }
 
 .modal-dialog-btn-ok {
-  background-color: var(--modal-dialog-ok-bg-color, green);
+  background-color: var(--modal-dialog-ok-bg-color, rgb(0, 77, 0));
   cursor: pointer;
 }
 
 ::slotted(h1) {
-  color: red;
+  color: rgb(115, 211, 255);
   font-size: 1.25rem;
   margin: 0;
 }
 
 ::slotted(.modal-dialog-message) {
-  color: red;
+  color: #fff;
 }

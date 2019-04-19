@@ -3,7 +3,8 @@
         "home": {
             "world": "tout le monde",
             "hello": "Bonjour ${name}!",
-            "greet": "Comment allez-vous aujourd'hui, ${name}?"
+            "greet": "Comment allez-vous aujourd'hui, ${name}?",
+            "message_html": "Bonjour!<br/>Vous pouvez prendre le temps d'inspecter les examples Hello World et Formulaire.<br/>Ou alors vous pouvez directement plonger dans notre collection de films Hong-Kongais favoris ! Amusez-vous bien !"
         }
     }
 }

@@ -1,0 +1,24 @@
+.wtn-form {
+    display: flex;
+    flex-direction: column;
+    margin: 15px auto;
+    max-width: 200px;
+}
+.wtn-form > * {
+    margin-bottom: 10px;
+}
+.wtn-form > label:not(.input-checkbox) {
+    display: flex;
+    flex-direction: column;
+    min-width: 200px;
+}
+
+.wtn-form > label.input-checkbox {
+    display: flex;
+}
+
+.wtn-form > label > span {
+    display: block;
+    min-width: 150px;
+    width: 100%;
+}

@@ -7,6 +7,8 @@ import { BasePage } from 'pages/base';
 import SimpleStore from 'stores/simple-store';
 
 import 'components/movie-card';
+import 'components/movie-card-form';
+import 'components/modal-dialog';
 import 'widgets/firestore-user-control';
 
 import firebase from 'firebase/app';
@@ -22,13 +24,43 @@ export class MoviesPage extends BasePage {
     }
     references() {
         return {
-            'movieCards': '.movie-cards'
+            'movieCards': '.movie-cards',
+            'addBtn': '.movie-cards-new-control',
+            'dialog': '.movie-cards-dialog',
+            'dialogTitle': '.movie-cards-dialog-title',
+            'dialogForm': '.movie-cards-dialog-form',
+            'dialogFormSubmit': '.movie-cards-dialog-form-submit'
+        }
+    }
+    listeners() {
+        return {
+            'addBtn': {
+                'click': () => {
+                    this.getRef('dialogTitle').textContent = "New Movie";
+                    this.getRef('dialog').show();
+                }
+            },
+            'dialogFormSubmit': {
+                'click': () => {
+                    this.getRef('dialogForm').submit();
+                }
+            },
+            'dialogForm': {
+                'add-movie': e => {
+                    const movie = e.detail;
+                    movie.author = SimpleStore.get('user').getData().uid;
+                    this._db.collection("movies").add(movie);
+                    this.getRef('dialog').hide();
+                    this.getRef('dialogForm').reset();
+                }
+            }
         }
     }
     connectedCallback() {
         super.connectedCallback();
         // Init data
         this._userSub = SimpleStore.get('user').subscribe(user => {
+            this.getRef('addBtn').style.visibility =  (user.uid && !user.isAnonymous) ? 'visible' : 'hidden';
             if (user.uid && !SimpleStore.get('movies').getData('movies')) {
                 this._db = firebase.firestore();
                 // Retrieve data

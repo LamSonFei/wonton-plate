@@ -1,6 +1,8 @@
-.movie-cards-user-control {
+.movie-cards-controls {
   margin-bottom: 10px;
   width: 100%;
+  display: flex;
+  justify-content: space-between;
 }
 
 .movie-cards {
@@ -17,8 +19,16 @@
 }
 
 @media screen and (min-width: 925px) {
-    .movie-cards {
-      grid-template-columns: repeat(3, 1fr);
-    }
+  .movie-cards {
+    grid-template-columns: repeat(3, 1fr);
   }
-  
+}
+
+.movie-cards .wtn-movie-card .wtn-movie-card-link {
+  color: rgb(128, 236, 255);
+  text-shadow: 0 0 5px #000, 0 0 10px #000, 0 0 15px #fff, 0 0 20px #228DFF, 0 0 35px #228DFF, 0 0 40px #228DFF, 0 0 50px #228DFF, 0 0 75px #228DFF;
+}
+.movie-cards .wtn-movie-card .wtn-movie-card-link:hover {
+  color: rgb(180, 244, 255);
+  animation: none;
+}

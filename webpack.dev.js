@@ -13,6 +13,7 @@ module.exports = merge(common, {
     devServer: {
         contentBase: './dev',
         hot: true,
+        compress: true,
         historyApiFallback: true
     },
     plugins: [

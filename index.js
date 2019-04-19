@@ -9,6 +9,7 @@ const port = process.env.PORT || 3000;
 app.use(compression());
 
 app.use('/', express.static(path.join(__dirname, 'dist')));
+app.use('/assets', express.static(path.join(__dirname, 'dist/assets')));
 app.use(fallback(path.join(__dirname, '/dist/index.html')));
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));

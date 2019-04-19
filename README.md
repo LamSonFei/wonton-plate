@@ -11,6 +11,7 @@ This is a base project with multiple objectives:
 ## Software template design description
 
 This application template showcases how to use Web Components for the following use cases:
+ * Use of mixins to add features on Web Components
  * Static content delivery
  * Form management
  * Firestore integration
@@ -22,6 +23,7 @@ A few things to note before you get started with the template:
  * As I did not want to recode a reactive framework, it uses [RxJS](https://github.com/ReactiveX/rxjs) for the Observable pattern.
  * It uses [Lodash](https://github.com/lodash/lodash) for JS objects manipulation.
  * The router, i18n support, store implementation and "Wonton" way of writing components are custom-made and can be improved (a lot). They are provided as is without any guarantee or support (see license below).
+ * The bundling is not yet optimized. The Firestore dependencies almost takes 1Mb of space.
 
 
 ## Usage
@@ -30,7 +32,7 @@ A few things to note before you get started with the template:
  ```
  npm run dev-server
  ```
- To build the demo:
+ To build the application:
  ```
  npm run build
  ```
@@ -47,7 +49,7 @@ A demo is also available, thanks to [Heroku](https://www.heroku.com), at https:/
 This project started at https://github.com/Zenika/wanton-template, but got moved to a personal repository by its author.  
 You can can find the issue board here: https://github.com/LamSonFei/wonton-plate/issues.  
   
-A fork is always available for Zenika at: https://github.com/Zenika/wonton-plate.
+A fork is always available for [Zenika](https://www.zenika.com/) at: https://github.com/Zenika/wonton-plate.
 
 ## Licensing
 

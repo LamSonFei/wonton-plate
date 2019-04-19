@@ -3,8 +3,10 @@ a.wtn-link-link {
     color: #fff;
 }
 a.wtn-link-link:visited {
+    cursor: pointer;
     color: #fff;
 }
 a.wtn-link-link:hover {
+    cursor: pointer;
     color: rgb(115, 211, 255);
 }

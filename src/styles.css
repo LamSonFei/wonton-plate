@@ -54,7 +54,8 @@ a:hover {
 a:visited {
   color: #fff;
 }
-button {
+button,
+select {
   background-color: black;
   color: white;
   border: solid 1px #fff;

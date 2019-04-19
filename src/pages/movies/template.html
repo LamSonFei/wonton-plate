@@ -1,2 +1,10 @@
-<wtn-firestore-user-control class="movie-cards-user-control"></wtn-firestore-user-control>
+<div class="movie-cards-controls">
+  <button type="button" class="movie-cards-new-control" style="visibility:hidden">+ Add Movie</button>
+  <wtn-firestore-user-control class="movie-cards-user-control"></wtn-firestore-user-control>
+</div>
 <div class="movie-cards"></div>
+<wtn-modal-dialog class="movie-cards-dialog" hideok="true">
+    <h2 slot="title" class="movie-cards-dialog-title"></h2>
+    <wtn-movie-card-form class="movie-cards-dialog-form" hidesubmit="true"></wtn-movie-card-form>
+    <button slot="custom-controls" type="button" class="movie-cards-dialog-form-submit">Confirm</button>
+</wtn-modal-dialog>

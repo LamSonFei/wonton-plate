@@ -37,27 +37,29 @@ export class MovieCard extends mix(HTMLElement).with(WontonMixin) {
         this._movie = movie;
         this.refreshDisplay();
     }
-    refreshDisplay() {
+    refreshDisplay(refreshAll = true) {
         if (!this.isRendered) {
             setTimeout(() => {
-                this.refreshDisplay();
+                this.refreshDisplay(refreshAll);
             }, 0);
             return;
         }
-        this.getRef('directors').innerHTML = (this._movie.directors || []).reduce((list, director) => {
-            return list + `<li><a href="https://www.google.com/search?q=${'director%20' + encodeURI(director)}" target="_blank">${director}</a></li>`;
-        }, '');
-        this.getRef('producers').innerHTML = (this._movie.producers || []).reduce((list, producer) => {
-            return list + `<li><a href="https://www.google.com/search?q=${'producer%20' + encodeURI(producer)}" target="_blank">${producer}</a></li>`;
-        }, '');
-        this.getRef('cast').innerHTML = (this._movie.cast || []).reduce((list, actor) => {
-            return list + `<li><a href="https://www.google.com/search?q=${'actor%20' + encodeURI(actor)}" target="_blank">${actor}</a></li>`;
-        }, '');
-        this.getRef('name').textContent = this._movie.name || '[UNKNOWN]';
-        this.getRef('link').href = `https://www.imdb.com/find?exact=true&q=${encodeURI(this._movie.name)}`;
-        const releaseDate = this._movie.release ? this._movie.release.toDate() : null;
-        if (releaseDate) {
-            this.getRef('release').textContent = releaseDate.toLocaleDateString('en-SG');
+        if (refreshAll) {
+            this.getRef('directors').innerHTML = (this._movie.directors || []).reduce((list, director) => {
+                return list + `<li><a href="https://www.google.com/search?q=${'director%20' + encodeURI(director)}" target="_blank">${director}</a></li>`;
+            }, '');
+            this.getRef('producers').innerHTML = (this._movie.producers || []).reduce((list, producer) => {
+                return list + `<li><a href="https://www.google.com/search?q=${'producer%20' + encodeURI(producer)}" target="_blank">${producer}</a></li>`;
+            }, '');
+            this.getRef('cast').innerHTML = (this._movie.cast || []).reduce((list, actor) => {
+                return list + `<li><a href="https://www.google.com/search?q=${'actor%20' + encodeURI(actor)}" target="_blank">${actor}</a></li>`;
+            }, '');
+            this.getRef('name').textContent = this._movie.name || '[UNKNOWN]';
+            this.getRef('link').href = `https://www.imdb.com/find?exact=true&q=${encodeURI(this._movie.name)}`;
+            const releaseDate = this._movie.release ? this._movie.release.toDate() : null;
+            if (releaseDate) {
+                this.getRef('release').textContent = releaseDate.toLocaleDateString('en-SG');
+            }
         }
         if (this.liked === 'true') {
             this.getRef('likesBtn').setAttribute('disabled', '');
@@ -79,10 +81,13 @@ export class MovieCard extends mix(HTMLElement).with(WontonMixin) {
     propertiesAttributes() {
         return ['liked', 'disliked'];
     }
+    static get observedAttributes() {
+        return ['liked', 'disliked'];
+    }
     attributeChangedCallback(name, oldValue, newValue) {
         super.attributeChangedCallback(name, oldValue, newValue);
         if (!this.isRendered || oldValue === newValue) return;
-        this.refreshDisplay();
+        this.refreshDisplay(false);
     }
 }
 
