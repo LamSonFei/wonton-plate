@@ -11,6 +11,7 @@ import { mix } from 'utils/mixins';
  * Movie card component.
  */
 export class MovieCard extends mix(HTMLElement).with(WontonMixin) {
+    // Wonton config
     static componentName() {
         return 'wtn-movie-card';
     }
@@ -29,14 +30,57 @@ export class MovieCard extends mix(HTMLElement).with(WontonMixin) {
             'likes': '.wtn-movie-card-likes',
             'dislikes': '.wtn-movie-card-dislikes',
             'likesBtn': '.wtn-movie-card-likes-button',
-            'dislikesBtn': '.wtn-movie-card-dislikes-button'
+            'dislikesBtn': '.wtn-movie-card-dislikes-button',
+            'deleteBtn': '.wtn-movie-card-delete-button',
+            'updateBtn': '.wtn-movie-card-update-button'
         };
     }
-    // Methods
+    listeners() {
+        return {
+            'deleteBtn': {
+                'click': () => {
+                    this.dispatchEvent(new CustomEvent('delete-movie', {
+                        bubbles: true,
+                        composed: true,
+                        detail: this._movie
+                    }));
+                }
+            },
+            'updateBtn': {
+                'click': () => {
+                    this.dispatchEvent(new CustomEvent('edit-movie', {
+                        bubbles: true,
+                        composed: true,
+                        detail: this._movie
+                    }));
+                }
+            }
+        }
+    }
+    propertiesAttributes() {
+        return ['liked', 'disliked'];
+    }
+    // Custom properties
+    /**
+     * Sets the movie to display.
+     * @param {Object} movie the movie to display
+     */
     set movie(movie) {
         this._movie = movie;
         this.refreshDisplay();
     }
+    /**
+     * Gets the displayed movie.
+     * @return {Object} the displayed movie
+     */
+    get movie() {
+        return this._movie;
+    }
+    // Methods
+    /**
+     * Refreshes the display of the card depending on the movie to present.
+     * @param {Boolean} refreshAll if all the card needs to be refreshed or just the ratings
+     */
     refreshDisplay(refreshAll = true) {
         if (!this.isRendered) {
             setTimeout(() => {
@@ -56,9 +100,8 @@ export class MovieCard extends mix(HTMLElement).with(WontonMixin) {
             }, '');
             this.getRef('name').textContent = this._movie.name || '[UNKNOWN]';
             this.getRef('link').href = `https://www.imdb.com/find?exact=true&q=${encodeURI(this._movie.name)}`;
-            const releaseDate = this._movie.release ? this._movie.release.toDate() : null;
-            if (releaseDate) {
-                this.getRef('release').textContent = releaseDate.toLocaleDateString('en-SG');
+            if (this._movie.release) {
+                this.getRef('release').textContent = this._movie.release.toLocaleDateString('en-SG');
             }
         }
         if (this.liked === 'true') {
@@ -74,12 +117,10 @@ export class MovieCard extends mix(HTMLElement).with(WontonMixin) {
         this.getRef('likes').textContent = this._movie.likes || 0;
         this.getRef('dislikes').textContent = this._movie.dislikes || 0;
     }
+    // Lifecycle
     connectedCallback() {
         super.connectedCallback();
         this.refreshDisplay();
-    }
-    propertiesAttributes() {
-        return ['liked', 'disliked'];
     }
     static get observedAttributes() {
         return ['liked', 'disliked'];
@@ -87,6 +128,7 @@ export class MovieCard extends mix(HTMLElement).with(WontonMixin) {
     attributeChangedCallback(name, oldValue, newValue) {
         super.attributeChangedCallback(name, oldValue, newValue);
         if (!this.isRendered || oldValue === newValue) return;
+        // Only ratings are dynamically linked to attributes
         this.refreshDisplay(false);
     }
 }

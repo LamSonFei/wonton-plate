@@ -6,6 +6,7 @@ import { mix } from 'utils/mixins';
  * Base page component to be extended by pages of the application.
  */
 export class BasePage extends mix(HTMLElement).with(WontonMixin) {
+    // Lifecycle
     connectedCallback() {
         super.connectedCallback();
         this.classList.add('page-base');

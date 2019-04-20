@@ -14,6 +14,7 @@ import { mix } from 'utils/mixins';
  * Movie card form component.
  */
 export class MovieCardForm extends mix(HTMLElement).with(WontonMixin) {
+    // Wonton config
     static componentName() {
         return 'wtn-movie-card-form';
     }
@@ -28,7 +29,11 @@ export class MovieCardForm extends mix(HTMLElement).with(WontonMixin) {
             'producers': '.wtn-movie-card-producers',
             'cast': '.wtn-movie-card-cast',
             'submitBtn': '.wtn-movie-card-submit',
-            'form': '.wtn-movie-card-form'
+            'form': '.wtn-movie-card-form',
+            'nameInput': '.wtn-movie-card-name',
+            'directorsInput': '.wtn-movie-card-directors',
+            'producersInput': '.wtn-movie-card-producers',
+            'castInput': '.wtn-movie-card-cast'
         };
     }
     listeners() {
@@ -38,14 +43,40 @@ export class MovieCardForm extends mix(HTMLElement).with(WontonMixin) {
                     e.preventDefault();
                     const movie = this.getRef('form').getJsonData();
                     movie.release = new Date(movie.release);
-                    movie.likes = 0;
-                    movie.dislikes = 0;
+                    movie.likes = this._movie ? this._movie.likes : 0;
+                    movie.dislikes = this._movie ? this._movie.dislikes : 0;
                     // TODO implement movie validation
                     const detail = movie;
-                    this.dispatchEvent(new CustomEvent('add-movie', { detail }));
+                    if (this.movie) {
+                        detail.uid = this.movie.uid;
+                        this.dispatchEvent(new CustomEvent('update-movie', { detail }));
+                    } else {
+                        this.dispatchEvent(new CustomEvent('add-movie', { detail }));
+                    }
+                    this.reset();
                 }
             }
         }
+    }
+    propertiesAttributes() {
+        return ['hidesubmit'];
+    }
+    // Custom properties
+    set movie(movie) {
+        if (!movie) {
+            this.reset();
+            return;
+        }
+        this._movie = { ...movie };
+        this._movie.release = this._movie.release ? this._movie.release.toISOString().split('T')[0] : null;
+        this.getRef('directorsInput').inputCount = (this._movie.directors || []).length;
+        this.getRef('producersInput').inputCount = (this._movie.producers || []).length;
+        this.getRef('castInput').inputCount = (this._movie.cast || []).length;
+        this.getRef('nameInput').setAttribute('readonly', '');
+        this.getRef('form').setJsonData(this._movie);
+    }
+    get movie() {
+        return this._movie;
     }
     // Methods
     submit() {
@@ -55,20 +86,18 @@ export class MovieCardForm extends mix(HTMLElement).with(WontonMixin) {
         }));
     }
     reset() {
+        this._movie = null;
+        this.getRef('nameInput').removeAttribute('readonly');
         this.getRef('form').reset();
-    }
-    set movie(movie) {
-        this._movie = movie;
+        this.getRef('form').querySelectorAll('wtn-multi-text-input').forEach(input => input.reset());
     }
     refreshDisplay() {
         this.getRef('submitBtn').style.display = this.hidesubmit === 'true' ? 'none' : 'inline-block';
     }
+    // Lifecycle
     connectedCallback() {
         super.connectedCallback();
         this.refreshDisplay();
-    }
-    propertiesAttributes() {
-        return ['hidesubmit'];
     }
     static get observedAttributes() {
         return ['hidesubmit'];

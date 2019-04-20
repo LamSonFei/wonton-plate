@@ -29,18 +29,27 @@ import SimpleStore from 'stores/simple-store.js';
 firebase.auth().onAuthStateChanged(() => {
     const user = firebase.auth().currentUser;
     if (user && !user.isAnonymous) {
-        firebase.firestore().collection("users-ratings")
-            .where('user', '==', user.uid)
-            .get()
-            .then(querySnapshot => {
-                const ratings = {};
-                querySnapshot.forEach(s => {
-                    const data = s.data();
-                    ratings[data.movie] = data.rating;
-                });
-                user.ratings = ratings;
-                SimpleStore.get('user').setData(ratings, 'ratings');
+        const db = firebase.firestore();
+        Promise.all([
+            db.collection("users-profiles")
+                .doc(user.uid)
+                .get(),
+            // User ratings
+            db.collection("users-ratings")
+                .where('user', '==', user.uid)
+                .get()
+        ]).then(([profileDoc, querySnapshot]) => {
+            if (profileDoc.exists) {
+                Object.assign(user, profileDoc.data());
+            }
+            const ratings = {};
+            querySnapshot.forEach(s => {
+                const data = s.data();
+                ratings[data.movie] = data.rating;
             });
+            user.ratings = ratings;
+            SimpleStore.get('user').setData(ratings, 'ratings');
+        });
     }
     SimpleStore.get('user').setData(user || {});
     if (!user) {

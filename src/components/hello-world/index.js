@@ -13,6 +13,7 @@ import { mix } from 'utils/mixins';
  * Hello World demo component.
  */
 export class HelloWorld extends mix(HTMLElement).with(WontonMixin, I18nMixin) {
+    // Wonton config
     static componentName() {
         return 'hello-world';
     }
@@ -34,6 +35,20 @@ export class HelloWorld extends mix(HTMLElement).with(WontonMixin, I18nMixin) {
             }
         }
     }
+    propertiesAttributes() {
+        return ['name'];
+    }
+    // I18n config
+    i18nFilesPath() {
+        return 'components/hello-world/i18n';
+    }
+    localeChangedCallback() {
+        this.refreshInnerTexts();
+    }
+    // Custom properties
+    get helloWorldMessage() {
+        return this.i18n('cmp.hello-world.hello', {name: this.name || this.i18n('cmp.hello-world.world')});
+    }
     // Methods
     sayHello() {
         this.dispatchEvent(new CustomEvent('hello', { 
@@ -46,25 +61,9 @@ export class HelloWorld extends mix(HTMLElement).with(WontonMixin, I18nMixin) {
     refreshInnerTexts() {
         this.getRef('helloWorldButton').innerText = this.helloWorldMessage;
     }
-    // Computed properties
-    get helloWorldMessage() {
-        return this.i18n('cmp.hello-world.hello', {name: this.name || this.i18n('cmp.hello-world.world')});
-    }
-    // Properties attributes
-    propertiesAttributes() {
-        return ['name'];
-    }
-    // Observed attributes
+    // Lifecycle
     static get observedAttributes() {
         return ['name'];
-    }
-    // i18n
-    i18nFilesPath() {
-        return 'components/hello-world/i18n';
-    }
-    // Listeners
-    localeChangedCallback() {
-        this.refreshInnerTexts();
     }
     attributeChangedCallback(name, oldValue, newValue) {
         super.attributeChangedCallback(name, oldValue, newValue);
@@ -79,3 +78,4 @@ export class HelloWorld extends mix(HTMLElement).with(WontonMixin, I18nMixin) {
 }
 
 customElements.define(HelloWorld.componentName(), HelloWorld);
+export default HelloWorld;

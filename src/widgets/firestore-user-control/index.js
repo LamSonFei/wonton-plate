@@ -14,6 +14,7 @@ import './styles.css';
  * User control to login / logout and check out the current user profile.
  */
 export class FirestoreUserControl extends mix(HTMLElement).with(WontonMixin) {
+    // Wonton config
     static componentName() {
         return 'wtn-firestore-user-control';
     }
@@ -65,6 +66,7 @@ export class FirestoreUserControl extends mix(HTMLElement).with(WontonMixin) {
             }
         }
     }
+    // Methods
     handleAuthResult(authResult) {
         firebase.auth().currentUser.updateProfile({
             displayName: authResult.user.displayName
@@ -72,6 +74,7 @@ export class FirestoreUserControl extends mix(HTMLElement).with(WontonMixin) {
         this.getRef('loginDialog').hide();
         return false;
     }
+    // Lifecycle
     connectedCallback() {
         super.connectedCallback();
         firebase.auth().onAuthStateChanged(() => {
