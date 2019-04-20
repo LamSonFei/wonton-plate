@@ -43,8 +43,8 @@ export class MovieCardForm extends mix(HTMLElement).with(WontonMixin) {
                     e.preventDefault();
                     const movie = this.getRef('form').getJsonData();
                     movie.release = new Date(movie.release);
-                    movie.likes = this._movie ? this._movie.likes : 0;
-                    movie.dislikes = this._movie ? this._movie.dislikes : 0;
+                    movie.ratingTotal = this._movie ? this._movie.ratingTotal : 0;
+                    movie.ratingCount = this._movie ? this._movie.ratingCount : 0;
                     // TODO implement movie validation
                     const detail = movie;
                     if (this.movie) {

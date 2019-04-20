@@ -45,10 +45,13 @@ firebase.auth().onAuthStateChanged(() => {
             const ratings = {};
             querySnapshot.forEach(s => {
                 const data = s.data();
-                ratings[data.movie] = data.rating;
+                ratings[data.movie] = {
+                    rating: data.rating,
+                    uid: s.id
+                }
             });
             user.ratings = ratings;
-            SimpleStore.get('user').setData(ratings, 'ratings');
+            SimpleStore.get('user').setData(user);
         });
     }
     SimpleStore.get('user').setData(user || {});

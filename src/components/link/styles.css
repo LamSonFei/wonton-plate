@@ -6,7 +6,9 @@ a.wtn-link-link:visited {
     cursor: pointer;
     color: #fff;
 }
-a.wtn-link-link:hover {
+a.wtn-link-link:hover,
+a.wtn-link-link:active,
+a.wtn-link-link:focus {
     cursor: pointer;
     color: rgb(115, 211, 255);
 }

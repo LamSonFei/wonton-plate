@@ -36,7 +36,10 @@ export class MoviesPage extends BasePage {
             'dialog': '.movie-cards-dialog',
             'dialogTitle': '.movie-cards-dialog-title',
             'dialogForm': '.movie-cards-dialog-form',
-            'dialogFormSubmit': '.movie-cards-dialog-form-submit'
+            'dialogFormSubmit': '.movie-cards-dialog-form-submit',
+            'rateDialog': '.movie-cards-rate-dialog',
+            'rateEditor': '.movie-cards-rate-editor',
+            'rateSubmit': '.movie-cards-rate-submit'
         }
     }
     listeners() {
@@ -90,6 +93,16 @@ export class MoviesPage extends BasePage {
                     this.getRef('dialogForm').movie = movieToEdit;
                     this.getRef('dialog').show();
                 },
+                'rate-movie': e => {
+                    this._movieToRate = e.detail;
+                    const currentUser = SimpleStore.get('user').getData();
+                    if (currentUser.isAnonymous) {
+                        alert('Not authorized!');
+                        return;
+                    }
+                    this.getRef('rateEditor').rating = currentUser.ratings[this._movieToRate.uid] ? currentUser.ratings[this._movieToRate.uid].rating : 0;
+                    this.getRef('rateDialog').show();
+                },
                 'delete-movie': e => {
                     const currentUser = SimpleStore.get('user').getData();
                     if (!currentUser.admin) {
@@ -107,6 +120,31 @@ export class MoviesPage extends BasePage {
                         });
                     }
                 }
+            },
+            'rateSubmit': {
+                'click': () => {
+                    const currentUser = SimpleStore.get('user').getData();
+                    const newRating = this.getRef('rateEditor').rating;
+                    this._movieToRate.ratingCount += currentUser.ratings[this._movieToRate.uid] ? 0 : 1;
+                    this._movieToRate.ratingTotal += newRating - (currentUser.ratings[this._movieToRate.uid] ? currentUser.ratings[this._movieToRate.uid].rating : 0);
+                    if (currentUser.ratings[this._movieToRate.uid]) {
+                        this._db.collection('users-ratings').doc(currentUser.ratings[this._movieToRate.uid].uid).update({
+                            rating: newRating
+                        });
+                    } else {
+                        this._db.collection('users-ratings').add({
+                            user: currentUser.uid,
+                            movie: this._movieToRate.uid,
+                            rating: newRating
+                        });
+                    }
+                    this._db.collection('movies').doc(this._movieToRate.uid).update({
+                        ratingCount: this._movieToRate.ratingCount,
+                        ratingTotal: this._movieToRate.ratingTotal
+                    });
+                    currentUser.ratings[this._movieToRate.uid].rating = newRating;
+                    this.getRef('rateDialog').hide();
+                }
             }
         }
     }
@@ -122,7 +160,10 @@ export class MoviesPage extends BasePage {
                 // Retrieve data
                 this._firestoreUnsubsribe = this._db.collection("movies")
                     .orderBy('name')
-                    .onSnapshot(querySnapshot => {
+                    .onSnapshot({
+                        includeMetadataChanges: true
+                    }, querySnapshot => {
+                        this._needsRefreshing = true;
                         const movies = [];
                         querySnapshot.forEach(s => movies.push({
                             uid: s.id,
@@ -134,18 +175,17 @@ export class MoviesPage extends BasePage {
             }
             if (this._moviesSubscription) this._moviesSubscription.unsubscribe();
             this._moviesSubscription = SimpleStore.get('movies').subscribe(data => {
-                const ratings = SimpleStore.get('user').getData().ratings;
                 const movieCards = this.getRef('movieCards');
                 if (!movieCards.hasChildNodes() || this._needsRefreshing) {
+                    const currentUser = SimpleStore.get('user').getData();
                     // Displays the list of movies
                     const fragment = document.createDocumentFragment();
                     (data.movies || []).forEach(movie => {
                         const movieCard = document.createElement('wtn-movie-card');
                         movieCard.movie = movie;
-                        if (ratings) {
-                            movieCard.liked = ratings[movie.uid] > 0;
-                            movieCard.disliked = ratings[movie.uid] < 0;
-                        }
+                        movieCard.hidedelete = !currentUser.admin;
+                        movieCard.hideedit = currentUser.isAnonymous || (!currentUser.admin && currentUser.uid !== movie.author);
+                        movieCard.hiderate = currentUser.isAnonymous;
                         fragment.appendChild(movieCard);
                     });
                     while (movieCards.lastElementChild) {
@@ -153,12 +193,6 @@ export class MoviesPage extends BasePage {
                     }
                     movieCards.appendChild(fragment);
                     this._needsRefreshing = false;
-                } else if (ratings) {
-                    // Update only current user ratings if the movies have already been displayed
-                    movieCards.childNodes.forEach(movieCard => {
-                        movieCard.liked = ratings[movieCard.movie.uid] > 0;
-                        movieCard.disliked = ratings[movieCard.movie.uid] < 0;
-                    });
                 }
             });
         });

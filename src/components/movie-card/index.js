@@ -3,6 +3,8 @@
 import './styles.css';
 import template from './template.html';
 
+import 'components/wonton-rating';
+
 import { WontonMixin } from 'components/mixins/wonton';
 import { mix } from 'utils/mixins';
 
@@ -27,12 +29,10 @@ export class MovieCard extends mix(HTMLElement).with(WontonMixin) {
             'directors': '.wtn-movie-card-directors',
             'producers': '.wtn-movie-card-producers',
             'cast': '.wtn-movie-card-cast',
-            'likes': '.wtn-movie-card-likes',
-            'dislikes': '.wtn-movie-card-dislikes',
-            'likesBtn': '.wtn-movie-card-likes-button',
-            'dislikesBtn': '.wtn-movie-card-dislikes-button',
+            'rating': '.wtn-movie-card-rating',
+            'rateBtn': '.wtn-movie-card-rate-button',
             'deleteBtn': '.wtn-movie-card-delete-button',
-            'updateBtn': '.wtn-movie-card-update-button'
+            'editBtn': '.wtn-movie-card-edit-button'
         };
     }
     listeners() {
@@ -46,9 +46,18 @@ export class MovieCard extends mix(HTMLElement).with(WontonMixin) {
                     }));
                 }
             },
-            'updateBtn': {
+            'editBtn': {
                 'click': () => {
                     this.dispatchEvent(new CustomEvent('edit-movie', {
+                        bubbles: true,
+                        composed: true,
+                        detail: this._movie
+                    }));
+                }
+            },
+            'rateBtn': {
+                'click': () => {
+                    this.dispatchEvent(new CustomEvent('rate-movie', {
                         bubbles: true,
                         composed: true,
                         detail: this._movie
@@ -58,7 +67,7 @@ export class MovieCard extends mix(HTMLElement).with(WontonMixin) {
         }
     }
     propertiesAttributes() {
-        return ['liked', 'disliked'];
+        return ['hideedit', 'hidedelete', 'hiderate'];
     }
     // Custom properties
     /**
@@ -104,18 +113,10 @@ export class MovieCard extends mix(HTMLElement).with(WontonMixin) {
                 this.getRef('release').textContent = this._movie.release.toLocaleDateString('en-SG');
             }
         }
-        if (this.liked === 'true') {
-            this.getRef('likesBtn').setAttribute('disabled', '');
-            this.getRef('dislikesBtn').removeAttribute('disabled');
-            this.getRef('dislikesBtn').style.display = 'none';
-        }
-        if (this.disliked === 'true') {
-            this.getRef('dislikesBtn').setAttribute('disabled', '');
-            this.getRef('likesBtn').removeAttribute('disabled');
-            this.getRef('likesBtn').style.display = 'none';
-        }
-        this.getRef('likes').textContent = this._movie.likes || 0;
-        this.getRef('dislikes').textContent = this._movie.dislikes || 0;
+        this.getRef('editBtn').style.display = this.hideedit === 'true' ? 'none' : 'inline-block';
+        this.getRef('deleteBtn').style.display = this.hidedelete === 'true' ? 'none' : 'inline-block';
+        this.getRef('rateBtn').style.display = this.hiderate === 'true' ? 'none' : 'inline-block';
+        this.getRef('rating').rating = this._movie.ratingCount ? this._movie.ratingTotal / this._movie.ratingCount : 0;
     }
     // Lifecycle
     connectedCallback() {
@@ -123,7 +124,7 @@ export class MovieCard extends mix(HTMLElement).with(WontonMixin) {
         this.refreshDisplay();
     }
     static get observedAttributes() {
-        return ['liked', 'disliked'];
+        return ['hideedit', 'hidedelete', 'hiderate'];
     }
     attributeChangedCallback(name, oldValue, newValue) {
         super.attributeChangedCallback(name, oldValue, newValue);

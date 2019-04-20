@@ -13,6 +13,8 @@
 
 .nav-bar a.wtn-link-link,
 .nav-bar a.wtn-link-link:hover,
+.nav-bar a.wtn-link-link:active,
+.nav-bar a.wtn-link-link:focus,
 .nav-bar a.wtn-link-link:visited {
   font-family: "Monoton";
   text-decoration: none;
@@ -27,7 +29,9 @@
   text-shadow: 0 0 5px #000, 0 0 10px #000, 0 0 15px #fff, 0 0 20px #ff1177,
     0 0 35px #ff1177, 0 0 40px #ff1177, 0 0 50px #ff1177, 0 0 75px #ff1177;
 }
-.nav-bar-home a.wtn-link-link:hover {
+.nav-bar-home a.wtn-link-link:hover,
+.nav-bar-home a.wtn-link-link:active,
+.nav-bar-home a.wtn-link-link:focus {
   color: rgb(255, 168, 248);
   animation: neon-red 1.5s ease-in-out infinite alternate;
 }
@@ -38,7 +42,9 @@
   text-shadow: 0 0 5px #000, 0 0 10px #000, 0 0 15px #fff, 0 0 20px #b6ff00,
     0 0 35px #b6ff00, 0 0 40px #b6ff00, 0 0 50px #b6ff00, 0 0 75px #b6ff00;
 }
-.nav-bar-hello-john a.wtn-link-link:hover {
+.nav-bar-hello-john a.wtn-link-link:hover,
+.nav-bar-hello-john a.wtn-link-link:active,
+.nav-bar-hello-john a.wtn-link-link:focus {
   color: rgb(180, 255, 192);
   animation: neon-green 1.5s ease-in-out infinite alternate;
 }
@@ -49,7 +55,9 @@
   text-shadow: 0 0 5px #000, 0 0 10px #000, 0 0 15px #fff, 0 0 20px #b6ff00,
     0 0 35px #b6ff00, 0 0 40px #b6ff00, 0 0 50px #b6ff00, 0 0 75px #b6ff00;
 }
-.nav-bar-form a.wtn-link-link:hover {
+.nav-bar-form a.wtn-link-link:hover,
+.nav-bar-form a.wtn-link-link:active,
+.nav-bar-form a.wtn-link-link:focus {
   color: rgb(255, 250, 180);
   animation: neon-yellow 1.5s ease-in-out infinite alternate;
 }
@@ -60,7 +68,9 @@
   text-shadow: 0 0 5px #000, 0 0 10px #fff, 0 0 15px #fff, 0 0 20px #228dff,
     0 0 35px #228dff, 0 0 40px #228dff, 0 0 50px #228dff, 0 0 75px #228dff;
 }
-.nav-bar-movies a.wtn-link-link:hover {
+.nav-bar-movies a.wtn-link-link:hover,
+.nav-bar-movies a.wtn-link-link:active,
+.nav-bar-movies a.wtn-link-link:focus {
   color: rgb(180, 244, 255);
   animation: neon-blue 1.5s ease-in-out infinite alternate;
 }
