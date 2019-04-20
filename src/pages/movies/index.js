@@ -132,7 +132,7 @@ export class MoviesPage extends BasePage {
                             rating: newRating
                         });
                     } else {
-                        this._db.collection('users-ratings').add({
+                        this._db.collection('users-ratings').doc(`${this._movieToRate.uid}|${currentUser.uid}`).set({
                             user: currentUser.uid,
                             movie: this._movieToRate.uid,
                             rating: newRating
@@ -142,7 +142,10 @@ export class MoviesPage extends BasePage {
                         ratingCount: this._movieToRate.ratingCount,
                         ratingTotal: this._movieToRate.ratingTotal
                     });
-                    currentUser.ratings[this._movieToRate.uid].rating = newRating;
+                    currentUser.ratings[this._movieToRate.uid] = {
+                        uid: `${this._movieToRate.uid}|${currentUser.uid}`,
+                        rating: newRating
+                    };
                     this.getRef('rateDialog').hide();
                 }
             }

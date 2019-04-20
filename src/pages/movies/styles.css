@@ -33,3 +33,9 @@
   color: rgb(180, 244, 255);
   animation: none;
 }
+
+.movie-cards-rate-editor-container {
+  margin-bottom: 15px;
+  display: flex;
+  justify-content: center;
+}
