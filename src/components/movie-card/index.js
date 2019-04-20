@@ -3,6 +3,8 @@
 import './styles.css';
 import template from './template.html';
 
+import 'components/wonton-rating';
+
 import { WontonMixin } from 'components/mixins/wonton';
 import { mix } from 'utils/mixins';
 
@@ -11,6 +13,7 @@ import { mix } from 'utils/mixins';
  * Movie card component.
  */
 export class MovieCard extends mix(HTMLElement).with(WontonMixin) {
+    // Wonton config
     static componentName() {
         return 'wtn-movie-card';
     }
@@ -26,17 +29,67 @@ export class MovieCard extends mix(HTMLElement).with(WontonMixin) {
             'directors': '.wtn-movie-card-directors',
             'producers': '.wtn-movie-card-producers',
             'cast': '.wtn-movie-card-cast',
-            'likes': '.wtn-movie-card-likes',
-            'dislikes': '.wtn-movie-card-dislikes',
-            'likesBtn': '.wtn-movie-card-likes-button',
-            'dislikesBtn': '.wtn-movie-card-dislikes-button'
+            'rating': '.wtn-movie-card-rating',
+            'rateBtn': '.wtn-movie-card-rate-button',
+            'deleteBtn': '.wtn-movie-card-delete-button',
+            'editBtn': '.wtn-movie-card-edit-button'
         };
     }
-    // Methods
+    listeners() {
+        return {
+            'deleteBtn': {
+                'click': () => {
+                    this.dispatchEvent(new CustomEvent('delete-movie', {
+                        bubbles: true,
+                        composed: true,
+                        detail: this._movie
+                    }));
+                }
+            },
+            'editBtn': {
+                'click': () => {
+                    this.dispatchEvent(new CustomEvent('edit-movie', {
+                        bubbles: true,
+                        composed: true,
+                        detail: this._movie
+                    }));
+                }
+            },
+            'rateBtn': {
+                'click': () => {
+                    this.dispatchEvent(new CustomEvent('rate-movie', {
+                        bubbles: true,
+                        composed: true,
+                        detail: this._movie
+                    }));
+                }
+            }
+        }
+    }
+    propertiesAttributes() {
+        return ['hideedit', 'hidedelete', 'hiderate'];
+    }
+    // Custom properties
+    /**
+     * Sets the movie to display.
+     * @param {Object} movie the movie to display
+     */
     set movie(movie) {
         this._movie = movie;
         this.refreshDisplay();
     }
+    /**
+     * Gets the displayed movie.
+     * @return {Object} the displayed movie
+     */
+    get movie() {
+        return this._movie;
+    }
+    // Methods
+    /**
+     * Refreshes the display of the card depending on the movie to present.
+     * @param {Boolean} refreshAll if all the card needs to be refreshed or just the ratings
+     */
     refreshDisplay(refreshAll = true) {
         if (!this.isRendered) {
             setTimeout(() => {
@@ -56,37 +109,27 @@ export class MovieCard extends mix(HTMLElement).with(WontonMixin) {
             }, '');
             this.getRef('name').textContent = this._movie.name || '[UNKNOWN]';
             this.getRef('link').href = `https://www.imdb.com/find?exact=true&q=${encodeURI(this._movie.name)}`;
-            const releaseDate = this._movie.release ? this._movie.release.toDate() : null;
-            if (releaseDate) {
-                this.getRef('release').textContent = releaseDate.toLocaleDateString('en-SG');
+            if (this._movie.release) {
+                this.getRef('release').textContent = this._movie.release.toLocaleDateString('en-SG');
             }
         }
-        if (this.liked === 'true') {
-            this.getRef('likesBtn').setAttribute('disabled', '');
-            this.getRef('dislikesBtn').removeAttribute('disabled');
-            this.getRef('dislikesBtn').style.display = 'none';
-        }
-        if (this.disliked === 'true') {
-            this.getRef('dislikesBtn').setAttribute('disabled', '');
-            this.getRef('likesBtn').removeAttribute('disabled');
-            this.getRef('likesBtn').style.display = 'none';
-        }
-        this.getRef('likes').textContent = this._movie.likes || 0;
-        this.getRef('dislikes').textContent = this._movie.dislikes || 0;
+        this.getRef('editBtn').style.display = this.hideedit === 'true' ? 'none' : 'inline-block';
+        this.getRef('deleteBtn').style.display = this.hidedelete === 'true' ? 'none' : 'inline-block';
+        this.getRef('rateBtn').style.display = this.hiderate === 'true' ? 'none' : 'inline-block';
+        this.getRef('rating').rating = this._movie.ratingCount ? this._movie.ratingTotal / this._movie.ratingCount : 0;
     }
+    // Lifecycle
     connectedCallback() {
         super.connectedCallback();
         this.refreshDisplay();
     }
-    propertiesAttributes() {
-        return ['liked', 'disliked'];
-    }
     static get observedAttributes() {
-        return ['liked', 'disliked'];
+        return ['hideedit', 'hidedelete', 'hiderate'];
     }
     attributeChangedCallback(name, oldValue, newValue) {
         super.attributeChangedCallback(name, oldValue, newValue);
         if (!this.isRendered || oldValue === newValue) return;
+        // Only ratings are dynamically linked to attributes
         this.refreshDisplay(false);
     }
 }

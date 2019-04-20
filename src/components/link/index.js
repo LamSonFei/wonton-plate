@@ -7,6 +7,7 @@ import { WontonMixin } from 'components/mixins/wonton';
 import { mix } from 'utils/mixins';
 
 export class WontonLink extends mix(HTMLElement).with(WontonMixin) {
+    // Wonton config
     static componentName() {
         return 'wtn-link';
     }
@@ -33,7 +34,7 @@ export class WontonLink extends mix(HTMLElement).with(WontonMixin) {
     propertiesAttributes() {
         return ['label', 'path'];
     }
-    // Observed attributes
+    // Lifecycle
     static get observedAttributes() {
         return ['label'];
     }

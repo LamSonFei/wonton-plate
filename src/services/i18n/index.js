@@ -14,15 +14,20 @@ class I18nService extends HTMLElement {
     constructor() {
         super();
         // Bundle loading
+        // This tracks the loaded bundles to avoid downloading them multiple times
         this._loadedBundles = [];
+        // This tracks the number of bundles currently being loaded for each supported locale
         this._pending = this.supportedLocales.reduce((pending, locale) => {
             pending[locale] = 0;
             return pending;
         }, {});
+        // This is the local bundles storage, indexing bundles by locale
         this._bundleMap = {};
+        // This is the broadcaster for any locale / bundle changes
         this._updateBroadcaster = new BehaviorSubject();
         this._updateBroadcaster.next('en');
     }
+    // Wonton config
     static componentName() {
         return 'i18n-service';
     }
@@ -91,7 +96,7 @@ class I18nService extends HTMLElement {
     subscribe(config) {
         return this._updateBroadcaster.subscribe(config);
     }
-    // Observed attributes
+    // Lifecycle
     static get observedAttributes() {
         return ['locale'];
     }
@@ -101,6 +106,7 @@ class I18nService extends HTMLElement {
             this._updateBroadcaster.next(this.locale);
         }
     }
+    // Singleton getter
     static get instance() {
         if (!I18nService._instance) {
             I18nService._instance = new I18nService();

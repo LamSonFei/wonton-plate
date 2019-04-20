@@ -7,7 +7,13 @@ import 'components/form';
 import { BasePage } from 'pages/base';
 import LocalStorageStore from 'stores/localstorage-store';
 
+/**
+ * A page showcasing the use of an extended Form component.
+ * The page also uses a local storage bound store to persist whatever data has been submitted.
+ * As you can see, the amount of code to retrieve/inject data from/into the inputs is fairly straightforward.
+ */
 export class FormPage extends BasePage {
+    // Constructor
     constructor() {
         super();
         // Init options
@@ -20,6 +26,7 @@ export class FormPage extends BasePage {
             nationalitySelect.insertAdjacentHTML('beforeend', options);
         }
     }
+    // Wonton config
     useShadowDOM() {
         return true;
     }
@@ -39,6 +46,7 @@ export class FormPage extends BasePage {
             'form': {
                 'submit': e => {
                     e.preventDefault();
+                    // Retrieve data
                     const form = this.getRef('form');
                     const jsonData = form.getJsonData();
                     this._store.setData(jsonData);
@@ -47,9 +55,10 @@ export class FormPage extends BasePage {
             }
         }
     }
+    // Lifecycle
     connectedCallback() {
         super.connectedCallback();
-        // Init data
+        // Inject data
         this._store = LocalStorageStore.get('example-form');
         this.getRef('form').setJsonData(this._store.getData());
     }

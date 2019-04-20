@@ -1,2 +1,6 @@
-.wtn-movie-card-form {
+.wtn-movie-card-name[readonly] {
+    border: none;
+    background: none;
+    color: #fff;
+    outline: none;
 }

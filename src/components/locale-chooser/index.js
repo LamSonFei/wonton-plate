@@ -19,6 +19,7 @@ export class WontonLocaleChooser extends mix(HTMLElement).with(WontonMixin, I18n
         Object.assign(props, { localeOptions });
         super(props);
     }
+    // Wonton config
     static componentName() {
         return 'wtn-locale-chooser';
     }
@@ -46,6 +47,7 @@ export class WontonLocaleChooser extends mix(HTMLElement).with(WontonMixin, I18n
             }
         }
     }
+    // I18n config
     i18nFilesPath() {
         return 'components/locale-chooser/i18n';
     }

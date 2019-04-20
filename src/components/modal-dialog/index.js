@@ -10,6 +10,7 @@ import { mix } from 'utils/mixins';
  * Modal dialog web component. It content can be customized using slots.
  */
 export default class WontonModalDialog extends mix(HTMLElement).with(WontonMixin, I18nMixin) {
+    // Wonton config
     useShadowDOM() {
         return true;
     }
@@ -34,6 +35,11 @@ export default class WontonModalDialog extends mix(HTMLElement).with(WontonMixin
             'cancelBtn': { 'click': () => this._cancel() }
         }
     }
+    propertiesAttributes() {
+        return ['hideok', 'hidecancel'];
+    }
+
+    // I18n config
     i18nFilesPath() {
         return 'components/modal-dialog/i18n';
     }
@@ -42,6 +48,7 @@ export default class WontonModalDialog extends mix(HTMLElement).with(WontonMixin
         this.getRef('cancelBtn').innerText = this.i18n('modal-dialog.cancel');
     }
 
+    // Methods
     show() {
       // Trigger animation / transition
       if (this.hasAttribute('closing')) this.removeAttribute('closing');
@@ -53,7 +60,6 @@ export default class WontonModalDialog extends mix(HTMLElement).with(WontonMixin
         if (!this.hasAttribute('opened')) this.setAttribute('opened', '');
       }, 0);
     }
-
     hide() {
       // Trigger animation / transition
       if (this.hasAttribute('opening')) this.removeAttribute('opening');
@@ -65,22 +71,21 @@ export default class WontonModalDialog extends mix(HTMLElement).with(WontonMixin
         if (this.hasAttribute('opened')) this.removeAttribute('opened');
       }, 0);
     }
-
     _cancel() {
         this.hide();
         this.dispatchEvent(new Event('cancel'))
     }
-
     _ok() {
         this.hide();
         this.dispatchEvent(new Event('ok'));
     }
 
-    // Properties attributes
-    propertiesAttributes() {
-        return ['hideok', 'hidecancel'];
+    // Lifecycle
+    connectedCallback() {
+        super.connectedCallback();
+        this.getRef('okBtn').style.display = this.hideok === 'true' ? 'none' : 'inline-block';
+        this.getRef('cancelBtn').style.display = this.hidecancel === 'true' ? 'none' : 'inline-block';
     }
-    // Observed attributes
     static get observedAttributes() {
         return ['hideok', 'hidecancel'];
     }
@@ -96,11 +101,6 @@ export default class WontonModalDialog extends mix(HTMLElement).with(WontonMixin
                 break;
             default:
         }
-    }
-    connectedCallback() {
-        super.connectedCallback();
-        this.getRef('okBtn').style.display = this.hideok === 'true' ? 'none' : 'inline-block';
-        this.getRef('cancelBtn').style.display = this.hidecancel === 'true' ? 'none' : 'inline-block';
     }
 }
 customElements.define(WontonModalDialog.componentName(), WontonModalDialog);

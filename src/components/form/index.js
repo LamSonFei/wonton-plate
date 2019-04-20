@@ -10,9 +10,11 @@ import './styles.css';
  * Extends a native HTML form element.
  */
 export class WontonForm extends mix(HTMLFormElement).with(WontonMixin) {
+  // Wonton config
   static componentName() {
     return "wtn-form";
   }
+  // Methods
   /**
    * Maps data from an object to the form fields.
    * Each property of the JSON object is mapped based on the name of the input.
@@ -73,6 +75,8 @@ export class WontonForm extends mix(HTMLFormElement).with(WontonMixin) {
     return formData;
   }
 }
+
 customElements.define(WontonForm.componentName(), WontonForm, {
   extends: "form"
 });
+export default WontonForm;

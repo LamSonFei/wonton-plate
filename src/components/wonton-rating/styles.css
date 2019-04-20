@@ -1,0 +1,35 @@
+.wtn-rating-container {
+  width: 100px;
+  position: relative;
+  height: 20px;
+}
+.wtn-rating-ratio {
+  position: absolute;
+  height: 20px;
+  background-color: rgb(195, 160, 0);
+}
+.wtn-rating-wonton {
+  position: absolute;
+  display: inline-block;
+  background: transparent url("/assets/images/wonton-rating-black.png") no-repeat;
+  width: 20px;
+  height: 20px;
+  background-size: contain;
+  background-position: center;
+  padding: 0;
+}
+.wtn-rating-wonton.wonton-1 {
+  left: 0px;
+}
+.wtn-rating-wonton.wonton-2 {
+  left: 20px;
+}
+.wtn-rating-wonton.wonton-3 {
+  left: 40px;
+}
+.wtn-rating-wonton.wonton-4 {
+  left: 60px;
+}
+.wtn-rating-wonton.wonton-5 {
+  left: 80px;
+}

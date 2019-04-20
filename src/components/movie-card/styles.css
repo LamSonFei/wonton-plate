@@ -1,9 +1,35 @@
 .wtn-movie-card {
+  position: relative;
   display: inline-grid;
   grid-template-rows: min-content 1fr;
   border: solid 1px white;
   padding: 10px;
   width: 300px;
+}
+
+.wtn-movie-card-controls {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  display: flex;
+  justify-content: flex-end;
+}
+@media (hover: hover) {
+  .wtn-movie-card-controls {
+    opacity: 0.2;
+  }
+  .wtn-movie-card-controls:hover,
+  .wtn-movie-card-controls:active {
+    opacity: 1;
+  }
+}
+@media (hover: none) {
+  .wtn-movie-card-controls {
+    opacity: 0.5;
+  }
+}
+.wtn-movie-card-delete-button {
+  margin-left: 10px;
 }
 
 .wtn-movie-card-name {
@@ -27,12 +53,12 @@
 .wtn-movie-card-footer {
   border-top: solid 1px #fff;
   padding-top: 8px;
-  text-align: right;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
-.wtn-movie-card-footer > button {
-  cursor: pointer;
-}
-.wtn-movie-card-footer > button[disabled] {
-  background-color: rgb(0, 174, 255);
-  color: #000;
+.wtn-movie-card-rate-button-label {
+  display: inline-block;
+  padding-left: 5px;
+  line-height: 20px;
 }

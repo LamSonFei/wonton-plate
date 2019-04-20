@@ -11,12 +11,12 @@ import { mix } from 'utils/mixins';
  * Component handling a variable number of text inputs for array-typed fields.
  */
 export class MultiTextInput extends mix(HTMLElement).with(WontonMixin) {
-    get inputCount() {
-        return this._inputCount || 0;
+    // Init
+    constructor() {
+        super();
+        this._inputCount = 0;
     }
-    set inputCount(inputCount) {
-        this._inputCount = inputCount;
-    }
+    // Wonton config
     static componentName() {
         return 'wtn-multi-text-input';
     }
@@ -32,13 +32,7 @@ export class MultiTextInput extends mix(HTMLElement).with(WontonMixin) {
     listeners() {
         return {
             'addBtn': {
-                'click': () => {
-                    const inputNb = this.inputCount++;
-                    this.getRef('addBtn').insertAdjacentHTML('beforebegin', `
-                        <input type="text" class="wtn-multi-text-input-input" name="${this.name}[${inputNb}]" />
-                        <button type="button" class="wtn-multi-text-input-remove" data-index="${inputNb}">-</button>
-                    `);
-                }
+                'click': () => this.inputCount++
             },
             'container': {
                 'click': e => {
@@ -57,6 +51,31 @@ export class MultiTextInput extends mix(HTMLElement).with(WontonMixin) {
             }
         }
     }
+    propertiesAttributes() {
+        return ['name'];
+    }
+    // Custom properties
+    get inputCount() {
+        return this._inputCount;
+    }
+    set inputCount(inputCount) {
+        if (this._inputCount < inputCount) {
+            for (let i = this._inputCount; i < inputCount; i++) {
+                this.getRef('addBtn').insertAdjacentHTML('beforebegin', `
+                    <input type="text" class="wtn-multi-text-input-input" name="${this.name}[${i}]" />
+                    <button type="button" class="wtn-multi-text-input-remove" data-index="${i}">-</button>
+                `);
+            }
+        } else if (this._inputCount > inputCount) {
+            const inputs = this.getRef('container').querySelectorAll('.wtn-multi-text-input-input');
+            const removeButtons = this.getRef('container').querySelectorAll('.wtn-multi-text-input-remove');
+            for (let i = this._inputCount - 1; i >= inputCount; i--) {
+                inputs[i].remove();
+                removeButtons[i].remove();
+            }
+        }
+        this._inputCount = inputCount;
+    }
     // Methods
     reset() {
         const inputs = this.getRef('container').querySelectorAll('.wtn-multi-text-input-input');
@@ -66,11 +85,9 @@ export class MultiTextInput extends mix(HTMLElement).with(WontonMixin) {
             removeButtons[i].remove();
         }
     }
+    // Lifecycle
     connectedCallback() {
         super.connectedCallback();
-    }
-    propertiesAttributes() {
-        return ['name'];
     }
 }
 

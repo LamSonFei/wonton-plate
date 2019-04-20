@@ -22,6 +22,7 @@ A few things to note before you get started with the template:
  * There is no Babel configuration. It uses pure ES6+ understandable only by the latest versions of browsers. You can set up an ES5 transpilation anytime though.
  * As I did not want to recode a reactive framework, it uses [RxJS](https://github.com/ReactiveX/rxjs) for the Observable pattern.
  * It uses [Lodash](https://github.com/lodash/lodash) for JS objects manipulation.
+ * The glowing effects are from Felix Rilling - http://f-rilling.com/ - https://codepen.io/FelixRilling/pen/qzfoc - big thanks!
  * The router, i18n support, store implementation and "Wonton" way of writing components are custom-made and can be improved (a lot). They are provided as is without any guarantee or support (see license below).
  * The bundling is not yet optimized. The Firestore dependencies almost takes 1Mb of space.
 

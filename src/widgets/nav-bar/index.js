@@ -15,6 +15,7 @@ import { mix } from 'utils/mixins';
  * Internationalized navigation bar widget.
  */
 export class NavBar extends mix(HTMLElement).with(WontonMixin, I18nMixin) {
+    // Wonton config
     static componentName() {
         return 'nav-bar';
     }
@@ -29,20 +30,20 @@ export class NavBar extends mix(HTMLElement).with(WontonMixin, I18nMixin) {
             'movies': '.nav-bar-movies'
         }
     }
-    // i18n
+    // I18n config
     i18nFilesPath() {
         return 'widgets/nav-bar/i18n';
+    }
+    localeChangedCallback() {
+        this.refreshLabels();
     }
     // Methods
     refreshLabels() {
         Object.keys(this.references()).forEach(ref => this.getRef(ref).label = this.i18n(`nav-bar.links.${ref}`));
     }
-    // Listeners
+    // Lifecycle
     connectedCallback() {
         super.connectedCallback();
-        this.refreshLabels();
-    }
-    localeChangedCallback() {
         this.refreshLabels();
     }
 }

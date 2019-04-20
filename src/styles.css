@@ -48,7 +48,9 @@ wtn-modal-dialog {
 a {
   color: rgb(0, 174, 255);
 }
-a:hover {
+a:hover,
+a:active,
+a:focus {
   color: rgb(115, 211, 255);
 }
 a:visited {
@@ -61,7 +63,10 @@ select {
   border: solid 1px #fff;
   cursor: pointer;
 }
-button:hover {
+button:hover,
+button:active,
+button:focus {
+  box-shadow: 1px 1px 5px #fff, -1px -1px 5px #fff;
   background-color: rgb(0, 174, 255);
   color: #000;
 }

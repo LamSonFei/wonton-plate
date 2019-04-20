@@ -1,3 +1,9 @@
+// This script starts a Node.js based Express server with a few basic supports:
+// - HTML 5 history API
+// - Gzipping
+// - Static files serving
+// - Port configuration from the PORT environment variable
+
 const express = require('express');
 const fallback = require('express-history-api-fallback');
 const app = express();

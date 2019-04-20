@@ -151,10 +151,14 @@ export function WontonMixin(clazz) {
       Object.getOwnPropertyNames(this._listeners).forEach(compRef => {
         const compListeners = this._listeners[compRef];
         Object.getOwnPropertyNames(compListeners).forEach(event => {
-          (compRef !== "this" ? this.getRef(compRef) : this).addEventListener(
-            event,
-            compListeners[event]
-          );
+          try {
+            (compRef !== "this" ? this.getRef(compRef) : this).addEventListener(
+              event,
+              compListeners[event]
+            );
+          } catch (err) {
+            log.error(`Error while initializing listeners for ${this._componentName} - ${compRef}/${event}: `, err);
+          }
         });
       });
     }
