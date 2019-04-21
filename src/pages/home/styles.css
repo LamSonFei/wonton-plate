@@ -24,7 +24,8 @@
   z-index: 1;
   pointer-events: none;
 }
-.welcome-message {
+.welcome-message,
+.dragon-copyright {
   text-align: center;
 }
 

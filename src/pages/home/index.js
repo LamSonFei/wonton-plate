@@ -30,7 +30,8 @@ export class HomePage extends mix(BasePage).with(I18nMixin) {
             'modalDialog': '.my-modal-dialog',
             'modalDialogTitle': '.hello-modal-title',
             'modalDialogBody': '.hello-modal-body',
-            'message': '.welcome-message'
+            'message': '.welcome-message',
+            'dragonCopyright': '.dragon-copyright'
         }
     }
     listeners() {
@@ -61,6 +62,7 @@ export class HomePage extends mix(BasePage).with(I18nMixin) {
         this.getRef('modalDialogTitle').innerText = this.i18n('page.home.hello', { name });
         this.getRef('modalDialogBody').innerText = this.i18n('page.home.greet', { name });
         this.getRef('message').innerHTML = this.i18n('page.home.message_html');
+        this.getRef('dragonCopyright').innerHTML = this.i18n('page.home.dragonCopy_html');
     }
     // Lifecycle
     connectedCallback() {

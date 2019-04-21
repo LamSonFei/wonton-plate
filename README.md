@@ -46,6 +46,7 @@ To launch the built application:
 
 This project is automatically built using [Circle CI](https://circleci.com).  
 A demo is also available, thanks to [Heroku](https://www.heroku.com), at https://wonton-plate.herokuapp.com.  
+The dragon icon used as a favicon and in the intro page comes from here: https://www.freeiconspng.com/img/35548.  
   
 This project started at https://github.com/Zenika/wanton-template, but got moved to a personal repository by its author.  
 You can can find the issue board here: https://github.com/LamSonFei/wonton-plate/issues.  
