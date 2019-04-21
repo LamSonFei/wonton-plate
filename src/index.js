@@ -81,7 +81,7 @@ log.debug('Initializing footer!');
 import { WontonLocaleChooser } from 'components/locale-chooser';
 const footer = document.querySelector('.footer');
 footer.append(new WontonLocaleChooser());
-footer.insertAdjacentHTML('beforeend', '<a class="wtn-github-link" href="https://github.com/LamSonFei" target="_blank">@LamSonFei</a>');
+footer.insertAdjacentHTML('beforeend', '<a class="wtn-github-link" href="https://github.com/LamSonFei" rel="noreferrer" target="_blank">@LamSonFei</a>');
 
 log.info('Application ready!');
 

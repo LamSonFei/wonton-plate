@@ -4,8 +4,8 @@
             "world": "World",
             "hello": "Hello ${name}!",
             "greet": "How are you today, ${name}?",
-            "message_html": "Welcome!<br/>Please spend some time looking at our basic Hello World or Form examples.<br/>Or you can just dive in our HK Movies fav' collection!<br/><br/>This template app is available on GitHub: <a class='wtn-github-link' href='https://github.com/LamSonFei/wonton-plate' target='_blank'>https://github.com/LamSonFei/wonton-plate</a><br/><br/>Enjoy!",
-            "dragonCopy_html": "- Dragon icon available <a href='https://www.freeiconspng.com/img/35550' target='_blank'>here</a>. -"
+            "message_html": "Welcome!<br/>Please spend some time looking at our basic Hello World or Form examples.<br/>Or you can just dive in our HK Movies fav' collection!<br/><br/>This template app is available on GitHub: <a class='wtn-github-link' href='https://github.com/LamSonFei/wonton-plate' rel='noreferrer' target='_blank'>https://github.com/LamSonFei/wonton-plate</a><br/><br/>Enjoy!",
+            "dragonCopy_html": "- Dragon icon available <a href='https://www.freeiconspng.com/img/35550' rel='noreferrer' target='_blank'>here</a>. -"
         }
     }
 }

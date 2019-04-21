@@ -99,13 +99,13 @@ export class MovieCard extends mix(HTMLElement).with(WontonMixin) {
         }
         if (refreshAll) {
             this.getRef('directors').innerHTML = (this._movie.directors || []).reduce((list, director) => {
-                return list + `<li><a href="https://www.google.com/search?q=${'director%20' + encodeURI(director)}" target="_blank">${director}</a></li>`;
+                return list + `<li><a rel="noreferrer" href="https://www.google.com/search?q=${'director%20' + encodeURI(director)}" target="_blank">${director}</a></li>`;
             }, '');
             this.getRef('producers').innerHTML = (this._movie.producers || []).reduce((list, producer) => {
-                return list + `<li><a href="https://www.google.com/search?q=${'producer%20' + encodeURI(producer)}" target="_blank">${producer}</a></li>`;
+                return list + `<li><a rel="noreferrer" href="https://www.google.com/search?q=${'producer%20' + encodeURI(producer)}" target="_blank">${producer}</a></li>`;
             }, '');
             this.getRef('cast').innerHTML = (this._movie.cast || []).reduce((list, actor) => {
-                return list + `<li><a href="https://www.google.com/search?q=${'actor%20' + encodeURI(actor)}" target="_blank">${actor}</a></li>`;
+                return list + `<li><a rel="noreferrer" href="https://www.google.com/search?q=${'actor%20' + encodeURI(actor)}" target="_blank">${actor}</a></li>`;
             }, '');
             this.getRef('name').textContent = this._movie.name || '[UNKNOWN]';
             this.getRef('link').href = `https://www.imdb.com/find?exact=true&q=${encodeURI(this._movie.name)}`;

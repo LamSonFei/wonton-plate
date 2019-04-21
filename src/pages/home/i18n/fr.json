@@ -4,8 +4,8 @@
             "world": "tout le monde",
             "hello": "Bonjour ${name}!",
             "greet": "Comment allez-vous aujourd'hui, ${name}?",
-            "message_html": "Bonjour!<br/>Vous pouvez prendre le temps d'inspecter les examples Hello World et Formulaire.<br/>Ou alors vous pouvez directement plonger dans notre collection de films Hong-Kongais favoris !<br/><br/>Le template d'application est disponible sur GitHub: <a class='wtn-github-link' href='https://github.com/LamSonFei/wonton-plate' target='_blank'>https://github.com/LamSonFei/wonton-plate</a><br/><br/>Amusez-vous bien !",
-            "dragonCopy_html": "- Icône du dragon disponible <a href='https://www.freeiconspng.com/img/35550' target='_blank'>ici</a>. -"
+            "message_html": "Bonjour!<br/>Vous pouvez prendre le temps d'inspecter les examples Hello World et Formulaire.<br/>Ou alors vous pouvez directement plonger dans notre collection de films Hong-Kongais favoris !<br/><br/>Le template d'application est disponible sur GitHub: <a class='wtn-github-link' href='https://github.com/LamSonFei/wonton-plate' rel='noreferrer' target='_blank'>https://github.com/LamSonFei/wonton-plate</a><br/><br/>Amusez-vous bien !",
+            "dragonCopy_html": "- Icône du dragon disponible <a href='https://www.freeiconspng.com/img/35550' rel='noreferrer' target='_blank'>ici</a>. -"
         }
     }
 }
