@@ -25,6 +25,7 @@
   flex-grow: 0;
   margin: auto;
   width: auto;
+  min-width: 300px;
   min-height: min-content;
   background: #000;
   border: 1px solid #fff;

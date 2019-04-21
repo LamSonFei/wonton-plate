@@ -4,7 +4,7 @@
             "world": "tout le monde",
             "hello": "Bonjour ${name}!",
             "greet": "Comment allez-vous aujourd'hui, ${name}?",
-            "message_html": "Bonjour!<br/>Vous pouvez prendre le temps d'inspecter les examples Hello World et Formulaire.<br/>Ou alors vous pouvez directement plonger dans notre collection de films Hong-Kongais favoris ! Amusez-vous bien !"
+            "message_html": "Bonjour!<br/>Vous pouvez prendre le temps d'inspecter les examples Hello World et Formulaire.<br/>Ou alors vous pouvez directement plonger dans notre collection de films Hong-Kongais favoris !<br/><br/>Le template d'application est disponible sur GitHub: <a class='wtn-github-link' href='https://github.com/LamSonFei/wonton-plate' target='_blank'>https://github.com/LamSonFei/wonton-plate</a><br/><br/>Amusez-vous bien !"
         }
     }
 }

@@ -38,6 +38,10 @@ html, body, .app, .main {
   position: relative;
 }
 
+.footer {
+  justify-content: space-between;
+}
+
 /* Restyling web components */
 wtn-modal-dialog {
   --modal-dialog-ok-bg-color: #bada55;
@@ -69,4 +73,13 @@ button:focus {
   box-shadow: 1px 1px 5px #fff, -1px -1px 5px #fff;
   background-color: rgb(0, 174, 255);
   color: #000;
+}
+
+a.wtn-github-link {
+  cursor: pointer;
+  color: rgb(255, 128, 244);
+}
+a.wtn-github-link:hover,
+a.wtn-github-link:active {
+  color: rgb(255, 168, 248);
 }

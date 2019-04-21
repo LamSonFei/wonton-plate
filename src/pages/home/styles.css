@@ -11,7 +11,7 @@
 }
 .page-home:after {
   content: "";
-  background: #0c0c0c url('/assets/images/dragon-icon.png') no-repeat;
+  background: #0c0c0c url("/assets/images/dragon-icon.png") no-repeat;
   background-size: contain;
   background-position-x: center;
   background-position-y: center;
@@ -25,5 +25,13 @@
   pointer-events: none;
 }
 .welcome-message {
-    text-align: center;
+  text-align: center;
+}
+
+.welcome-message a {
+  color: rgb(255, 128, 244);
+}
+.welcome-message a:hover,
+.welcome-message a:active {
+  color: rgb(255, 168, 248);
 }

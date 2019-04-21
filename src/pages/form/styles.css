@@ -1,44 +1,75 @@
 :host {
-    display: block;
-    width: 100%;
-    height: 100%;
+  display: block;
+  width: 100%;
+  height: 100%;
 }
 .page-form {
-    width: 100%;
-    height: 100%;
-    justify-content: center;
-    align-items: center;
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
 }
 /* We have to redefine because of shadow DOM encapsulation. Showcasing one pitfall here: web components should preferably used in slots. */
 .page-form-form {
-    display: flex;
-    flex-direction: column;
-    margin: 15px auto;
-    max-width: 200px;
+  display: flex;
+  flex-direction: column;
+  margin: 15px auto;
+  max-width: 200px;
 }
 .page-form-form > * {
-    margin-bottom: 10px;
+  margin-bottom: 10px;
 }
 .page-form-form > label:not(.input-checkbox) {
-    display: flex;
-    flex-direction: column;
-    min-width: 200px;
+  display: flex;
+  flex-direction: column;
+  min-width: 200px;
 }
 
 .page-form-form > label.input-checkbox {
-    display: flex;
+  display: flex;
 }
 
 .page-form-form > label > span {
-    display: block;
-    min-width: 150px;
-    width: 100%;
+  display: block;
+  min-width: 150px;
+  width: 100%;
+  margin-bottom: 2px;
 }
 .page-form-controls {
-    text-align: right;
+  text-align: right;
 }
 
 .input-radio-option {
-    display: flex;
-    margin-bottom: 5px;
+  display: flex;
+  margin-bottom: 5px;
+}
+
+.page-form-message {
+  width: 100%;
+  text-align: center;
+  font-size: 20px;
+  color: rgb(255, 247, 128);
+  text-shadow: 0 0 5px #000, 0 0 10px #000, 0 0 15px #fff, 0 0 20px #ffdd1b,
+    0 0 35px #ffdd1b, 0 0 40px #ffdd1b, 0 0 50px #ffdd1b, 0 0 75px #ffdd1b;
+}
+
+input,
+select {
+    background-color: #000;
+    color: rgb(255, 247, 128);
+    border: 1px solid rgb(255, 247, 128);
+}
+button {
+  cursor: pointer;
+  background-color: #000;
+  color: rgb(255, 247, 128);
+}
+button:hover,
+button:active {
+  box-shadow: 0 0 5px #000, 0 0 10px #000, 0 0 15px #fff, 0 0 20px #ffdd1b,
+    0 0 35px #ffdd1b, 0 0 40px #ffdd1b, 0 0 50px #ffdd1b, 0 0 75px #ffdd1b;
+}
+
+input[type="radio"]:checked + span {
+  color: rgb(255, 247, 128);
 }

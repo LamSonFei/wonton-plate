@@ -52,8 +52,8 @@
 .nav-bar-form a.wtn-link-link:visited {
   color: rgb(255, 247, 128);
   animation: none;
-  text-shadow: 0 0 5px #000, 0 0 10px #000, 0 0 15px #fff, 0 0 20px #b6ff00,
-    0 0 35px #b6ff00, 0 0 40px #b6ff00, 0 0 50px #b6ff00, 0 0 75px #b6ff00;
+  text-shadow: 0 0 5px #000, 0 0 10px #000, 0 0 15px #fff, 0 0 20px #ffdd1b,
+    0 0 35px #ffdd1b, 0 0 40px #ffdd1b, 0 0 50px #ffdd1b, 0 0 75px #ffdd1b;
 }
 .nav-bar-form a.wtn-link-link:hover,
 .nav-bar-form a.wtn-link-link:active,

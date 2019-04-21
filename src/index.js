@@ -79,7 +79,9 @@ document.querySelector('.header').append(new NavBar());
 
 log.debug('Initializing footer!');
 import { WontonLocaleChooser } from 'components/locale-chooser';
-document.querySelector('.footer').append(new WontonLocaleChooser());
+const footer = document.querySelector('.footer');
+footer.append(new WontonLocaleChooser());
+footer.insertAdjacentHTML('beforeend', '<a class="wtn-github-link" href="https://github.com/LamSonFei" target="_blank">@LamSonFei</a>');
 
 log.info('Application ready!');
 
