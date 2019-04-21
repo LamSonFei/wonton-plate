@@ -86,12 +86,12 @@ footer.insertAdjacentHTML('beforeend', '<a class="wtn-github-link" href="https:/
 log.info('Application ready!');
 
 // Webpack default PWA script
-// if ('serviceWorker' in navigator) {
-//     window.addEventListener('load', () => {
-//         navigator.serviceWorker.register('/service-worker.js').then(registration => {
-//             log.info('SW registered: ', registration);
-//         }).catch(registrationError => {
-//             log.warn('SW registration failed: ', registrationError);
-//         });
-//     });
-// }
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/service-worker.js').then(registration => {
+            log.info('SW registered: ', registration);
+        }).catch(registrationError => {
+            log.warn('SW registration failed: ', registrationError);
+        });
+    });
+}

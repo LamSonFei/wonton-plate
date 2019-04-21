@@ -8,6 +8,7 @@
 }
 .page-home img {
   filter: drop-shadow(0 0 1rem #7cbbff);
+  margin: 15px 0;
 }
 .page-home:after {
   content: "";

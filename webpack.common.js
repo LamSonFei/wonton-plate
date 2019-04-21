@@ -2,6 +2,7 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const WorkboxPlugin = require('workbox-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const WebpackPwaManifest = require('webpack-pwa-manifest')
 
 module.exports = {
     entry: {
@@ -24,11 +25,22 @@ module.exports = {
             }
         }),
         new CopyWebpackPlugin([
-            { from: 'src/assets', to: 'assets' }
+            { from: 'src/assets', to: 'assets' },
+            { from: 'robots.txt', to: 'robots.txt' }
         ]),
         new WorkboxPlugin.GenerateSW({
             clientsClaim: true,
             skipWaiting: true
+        }),
+        new WebpackPwaManifest({
+            name: 'Wonton Plate',
+            short_name: 'WontonPlate',
+            description: 'Web Components based Application Template and Demo',
+            background_color: '#ffffff',
+            icons: [{
+                src: path.resolve('src/assets/images/chinese-blue.png'),
+                sizes: [96, 128, 192, 256, 384, 512, 1024]
+            }]
         })
     ],
     resolve: {
