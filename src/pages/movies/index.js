@@ -3,6 +3,9 @@
 import './styles.css';
 import template from './template.html';
 
+import BrowserTypeMixin from 'components/mixins/browser-type';
+import { mix } from 'utils/mixins';
+
 import { BasePage } from 'pages/base';
 import SimpleStore from 'stores/simple-store';
 import log from 'services/log';
@@ -21,7 +24,7 @@ import 'firebase/firestore';
  * It also enables the creation and the update of movie cards for logged in users.
  * It finally allows admin to delete any cards.
  */
-export class MoviesPage extends BasePage {
+export class MoviesPage extends mix(BasePage).with(BrowserTypeMixin) {
     // Wonton config
     static componentName() {
         return 'page-movies';

@@ -6,13 +6,15 @@ import template from './template.html';
 import 'components/form';
 import { BasePage } from 'pages/base';
 import LocalStorageStore from 'stores/localstorage-store';
+import { mix } from 'utils/mixins';
+import BrowserTypeMixin from 'components/mixins/browser-type';
 
 /**
  * A page showcasing the use of an extended Form component.
  * The page also uses a local storage bound store to persist whatever data has been submitted.
  * As you can see, the amount of code to retrieve/inject data from/into the inputs is fairly straightforward.
  */
-export class FormPage extends BasePage {
+export class FormPage extends mix(BasePage).with(BrowserTypeMixin) {
     // Constructor
     constructor() {
         super();

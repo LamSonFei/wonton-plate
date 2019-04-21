@@ -26,7 +26,6 @@
 
 .movie-cards .wtn-movie-card .wtn-movie-card-link {
   color: rgb(128, 236, 255);
-  text-shadow: 0 0 5px #000, 0 0 10px #000, 0 0 15px #fff, 0 0 20px #228DFF, 0 0 35px #228DFF, 0 0 40px #228DFF, 0 0 50px #228DFF, 0 0 75px #228DFF;
 }
 .movie-cards .wtn-movie-card .wtn-movie-card-link:hover,
 .movie-cards .wtn-movie-card .wtn-movie-card-link:active {
@@ -45,6 +44,13 @@
   text-align: center;
   font-size: 20px;
   color: rgb(128, 236, 255);
+}
+
+/* GPU "intensive" styling */
+.page-movies[data-browser-type="desktop"] .wtn-movie-card .wtn-movie-card-link {
+  text-shadow: 0 0 5px #000, 0 0 10px #000, 0 0 15px #fff, 0 0 20px #228DFF, 0 0 35px #228DFF, 0 0 40px #228DFF, 0 0 50px #228DFF, 0 0 75px #228DFF;
+}
+.page-movies[data-browser-type="desktop"] .movie-cards-message {
   text-shadow: 0 0 5px #000, 0 0 10px #fff, 0 0 15px #fff, 0 0 20px #228dff,
     0 0 35px #228dff, 0 0 40px #228dff, 0 0 50px #228dff, 0 0 75px #228dff;
 }

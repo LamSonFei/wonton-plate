@@ -49,8 +49,6 @@
   text-align: center;
   font-size: 20px;
   color: rgb(255, 247, 128);
-  text-shadow: 0 0 5px #000, 0 0 10px #000, 0 0 15px #fff, 0 0 20px #ffdd1b,
-    0 0 35px #ffdd1b, 0 0 40px #ffdd1b, 0 0 50px #ffdd1b, 0 0 75px #ffdd1b;
 }
 
 input,
@@ -64,12 +62,18 @@ button {
   background-color: #000;
   color: rgb(255, 247, 128);
 }
-button:hover,
-button:active {
-  box-shadow: 0 0 5px #000, 0 0 10px #000, 0 0 15px #fff, 0 0 20px #ffdd1b,
-    0 0 35px #ffdd1b, 0 0 40px #ffdd1b, 0 0 50px #ffdd1b, 0 0 75px #ffdd1b;
-}
 
 input[type="radio"]:checked + span {
   color: rgb(255, 247, 128);
+}
+
+/* GPU "intensive" display */
+:host([data-browser-type="desktop"]) /deep/ .page-form-message {
+    text-shadow: 0 0 5px #000, 0 0 10px #000, 0 0 15px #fff, 0 0 20px #ffdd1b,
+      0 0 35px #ffdd1b, 0 0 40px #ffdd1b, 0 0 50px #ffdd1b, 0 0 75px #ffdd1b;
+  }
+:host([data-browser-type="desktop"]) /deep/ button:hover,
+:host([data-browser-type="desktop"]) /deep/ button:active {
+    box-shadow: 0 0 5px #000, 0 0 10px #000, 0 0 15px #fff, 0 0 20px #ffdd1b,
+      0 0 35px #ffdd1b, 0 0 40px #ffdd1b, 0 0 50px #ffdd1b, 0 0 75px #ffdd1b;
 }

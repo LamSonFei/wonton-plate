@@ -8,13 +8,14 @@ import 'components/link';
 
 import { WontonMixin } from 'components/mixins/wonton';
 import { I18nMixin } from 'components/mixins/i18n';
+import { BrowserTypeMixin } from 'components/mixins/browser-type';
 import { mix } from 'utils/mixins';
 
 
 /**
  * Internationalized navigation bar widget.
  */
-export class NavBar extends mix(HTMLElement).with(WontonMixin, I18nMixin) {
+export class NavBar extends mix(HTMLElement).with(WontonMixin, I18nMixin, BrowserTypeMixin) {
     // Wonton config
     static componentName() {
         return 'nav-bar';

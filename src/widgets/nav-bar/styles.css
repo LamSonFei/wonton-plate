@@ -75,6 +75,39 @@
   animation: neon-blue 1.5s ease-in-out infinite alternate;
 }
 
+/* Remove glowing effect on mobile for better rendering performance */
+.nav-bar[data-browser-type="mobile"] .nav-bar-home a.wtn-link-link,
+.nav-bar[data-browser-type="mobile"] .nav-bar-home a.wtn-link-link:visited {
+  text-shadow: 0 0 5px #ff1177;
+}
+.nav-bar[data-browser-type="mobile"] .nav-bar-hello-john a.wtn-link-link,
+.nav-bar[data-browser-type="mobile"] .nav-bar-hello-john a.wtn-link-link:visited {
+  text-shadow: 0 0 5px #b6ff00;
+}
+.nav-bar[data-browser-type="mobile"] .nav-bar-form a.wtn-link-link,
+.nav-bar[data-browser-type="mobile"] .nav-bar-form a.wtn-link-link:visited {
+  text-shadow: 0 0 5px #ffdd1b;
+}
+.nav-bar[data-browser-type="mobile"] .nav-bar-movies a.wtn-link-link,
+.nav-bar[data-browser-type="mobile"] .nav-bar-movies a.wtn-link-link:visited {
+  text-shadow: 0 0 5px #228dff;
+}
+.nav-bar[data-browser-type="mobile"] .nav-bar-home a.wtn-link-link:hover,
+.nav-bar[data-browser-type="mobile"] .nav-bar-home a.wtn-link-link:active,
+.nav-bar[data-browser-type="mobile"] .nav-bar-home a.wtn-link-link:focus,
+.nav-bar[data-browser-type="mobile"] .nav-bar-hello-john a.wtn-link-link:hover,
+.nav-bar[data-browser-type="mobile"] .nav-bar-hello-john a.wtn-link-link:active,
+.nav-bar[data-browser-type="mobile"] .nav-bar-hello-john a.wtn-link-link:focus,
+.nav-bar[data-browser-type="mobile"] .nav-bar-form a.wtn-link-link:hover,
+.nav-bar[data-browser-type="mobile"] .nav-bar-form a.wtn-link-link:active,
+.nav-bar[data-browser-type="mobile"] .nav-bar-form a.wtn-link-link:focus
+.nav-bar[data-browser-type="mobile"] .nav-bar-movies a.wtn-link-link:hover,
+.nav-bar[data-browser-type="mobile"] .nav-bar-movies a.wtn-link-link:active,
+.nav-bar[data-browser-type="mobile"] .nav-bar-movies a.wtn-link-link:focus {
+  animation: none;
+}
+
+
 /* Glows - BIG THANKS TO FELIX RILLING - http://f-rilling.com/ - https://codepen.io/FelixRilling/pen/qzfoc*/
 @keyframes neon-red {
   from {
