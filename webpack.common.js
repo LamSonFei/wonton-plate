@@ -30,13 +30,15 @@ module.exports = {
         ]),
         new WorkboxPlugin.GenerateSW({
             clientsClaim: true,
-            skipWaiting: true
+            skipWaiting: true,
+            navigateFallback: '/index.html'
         }),
         new WebpackPwaManifest({
             name: 'Wonton Plate',
             short_name: 'WontonPlate',
             description: 'Web Components based Application Template and Demo',
-            background_color: '#ffffff',
+            background_color: '#000000',
+            theme_color: "#000000",
             icons: [{
                 src: path.resolve('src/assets/images/chinese-blue.png'),
                 sizes: [96, 128, 192, 256, 384, 512, 1024]
