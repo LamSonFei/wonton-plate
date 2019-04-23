@@ -158,6 +158,7 @@ export class MoviesPage extends mix(BasePage).with(BrowserTypeMixin) {
     connectedCallback() {
         super.connectedCallback();
         this._userSub = SimpleStore.get('user').subscribe(user => {
+            this._needsRefreshing = true;
             // Only show the "Add Movie" button for non-anonymous users
             this.getRef('addBtn').style.visibility =  (user.uid && !user.isAnonymous) ? 'visible' : 'hidden';
             // Only download data if there is a logged-in user (even an anonymous one) and if the movies are not already pre-loaded
