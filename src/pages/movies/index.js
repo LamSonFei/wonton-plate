@@ -15,6 +15,8 @@ import 'components/movie-card-form';
 import 'components/modal-dialog';
 import 'widgets/firestore-user-control';
 
+import { debounceTime } from 'rxjs/operators';
+
 import firebase from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/firestore';
@@ -157,7 +159,9 @@ export class MoviesPage extends mix(BasePage).with(BrowserTypeMixin) {
     // Lifecycle
     connectedCallback() {
         super.connectedCallback();
-        this._userSub = SimpleStore.get('user').subscribe(user => {
+        this._userSub = SimpleStore.get('user')
+        .pipe(debounceTime(100))
+        .subscribe(user => {
             this._needsRefreshing = true;
             // Only show the "Add Movie" button for non-anonymous users
             this.getRef('addBtn').style.visibility =  (user.uid && !user.isAnonymous) ? 'visible' : 'hidden';
