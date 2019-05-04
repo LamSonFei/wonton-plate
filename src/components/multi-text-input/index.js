@@ -78,12 +78,7 @@ export class MultiTextInput extends mix(HTMLElement).with(WontonMixin) {
     }
     // Methods
     reset() {
-        const inputs = this.getRef('container').querySelectorAll('.wtn-multi-text-input-input');
-        const removeButtons = this.getRef('container').querySelectorAll('.wtn-multi-text-input-remove');
-        for (let i = 0; i < inputs.length; i++) {
-            inputs[i].remove();
-            removeButtons[i].remove();
-        }
+        this.inputCount = 0;
     }
     // Lifecycle
     connectedCallback() {
