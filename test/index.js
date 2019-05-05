@@ -1,18 +1,5 @@
-// This script initializes JSDOM for the unit tests
+import './stores/simple-store.test';
+import './stores/localstorage-store.test';
 
-import { JSDOM } from 'jsdom';
-
-global.window = new JSDOM("", {
-  url: "http://localhost"
-}).window;
-global.document = window.document;
-window.console = global.console;
-
-global.navigator = {
-  userAgent: "node.js"
-};
-
-var contexts = [require.context("./", true, /\.test\.js$/)];
-contexts.forEach(function(context) {
-  context.keys().forEach(context);
-});
+import './components/wonton-rating.test';
+import './components/multi-text-input.test';
