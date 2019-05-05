@@ -3,7 +3,7 @@
 import './styles.css';
 import template from './template.html';
 
-import 'components/locale-chooser';
+import 'widgets/locale-chooser';
 import 'components/link';
 
 import { WontonMixin } from 'components/mixins/wonton';

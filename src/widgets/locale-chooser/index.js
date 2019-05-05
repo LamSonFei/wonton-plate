@@ -2,7 +2,7 @@
 
 import './styles.css';
 
-import i18n from './../../services/i18n/index.js';
+import i18n from 'services/i18n/index.js';
 import { WontonMixin } from 'components/mixins/wonton';
 import { I18nMixin } from 'components/mixins/i18n';
 import { mix } from 'utils/mixins';
@@ -49,7 +49,7 @@ export class WontonLocaleChooser extends mix(HTMLElement).with(WontonMixin, I18n
     }
     // I18n config
     i18nFilesPath() {
-        return 'components/locale-chooser/i18n';
+        return 'widgets/locale-chooser/i18n';
     }
     localeChangedCallback(locale) {
         this.getRef('optionDefault').innerText = i18n.t('cmp.locale-chooser.choose-one');
