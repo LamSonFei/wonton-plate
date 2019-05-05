@@ -4,8 +4,6 @@ const nodeExternals = require('webpack-node-externals');
 
 module.exports = {
     mode: 'development',
-    target: 'node',
-    externals: [nodeExternals()],
     devtool: 'inline-source-map',
     entry: {
         app: './test/index.js'
@@ -19,6 +17,25 @@ module.exports = {
     },
     module: {
         rules: [
+            {
+                test: /\.css$/,
+                use: [
+                    'style-loader',
+                    'css-loader'
+                ]
+            },
+            {
+                test: /\.(png|svg|jpg|gif)$/,
+                use: [
+                    'file-loader'
+                ]
+            },
+            {
+                test: /\.(html)$/,
+                use: [
+                    'raw-loader'
+                ]
+            }
         ]
     },
     plugins: [
