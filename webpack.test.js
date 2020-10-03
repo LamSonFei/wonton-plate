@@ -1,5 +1,5 @@
 const path = require('path');
-const CleanWebpackPlugin = require('clean-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const nodeExternals = require('webpack-node-externals');
 
 module.exports = {
@@ -21,7 +21,7 @@ module.exports = {
                 test: /\.css$/,
                 use: [
                     'style-loader',
-                    'css-loader'
+                    'css-loader?url=false'
                 ]
             },
             {
@@ -39,6 +39,6 @@ module.exports = {
         ]
     },
     plugins: [
-        new CleanWebpackPlugin(['test-dist'])
+        new CleanWebpackPlugin()
     ]
 };
