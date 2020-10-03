@@ -17,6 +17,8 @@
   background-size: contain;
   background-position: center;
   padding: 0;
+}
+wtn-rating[editable="true"] .wtn-rating-wonton {
   cursor: pointer;
 }
 .wtn-rating-wonton.wonton-1 {
