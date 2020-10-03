@@ -18,16 +18,18 @@ module.exports = {
         }
     },
     plugins: [
+        new CopyWebpackPlugin({
+            patterns: [
+                { from: 'src/assets', to: 'assets' },
+                { from: 'robots.txt', to: 'robots.txt' }
+            ]
+        }),
         new HtmlWebpackPlugin({
             template: './src/index.html',
             meta: {
                 viewport: 'width=device-width, initial-scale=1, shrink-to-fit=no'
             }
         }),
-        new CopyWebpackPlugin([
-            { from: 'src/assets', to: 'assets' },
-            { from: 'robots.txt', to: 'robots.txt' }
-        ]),
         new WorkboxPlugin.GenerateSW({
             clientsClaim: true,
             skipWaiting: true,
@@ -54,7 +56,7 @@ module.exports = {
                 test: /\.css$/,
                 use: [
                     'style-loader',
-                    'css-loader'
+                    'css-loader?url=false'
                 ]
             },
             {
